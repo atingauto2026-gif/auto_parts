@@ -1,9 +1,2 @@
 import { listCategories } from '../utils/catalogService'
-import { isShopifyConfigured } from '../utils/shopify'
-
-export default defineEventHandler(() => {
-  return {
-    categories: listCategories(),
-    storefrontConfigured: isShopifyConfigured(),
-  }
-})
+export default defineEventHandler(async(event)=>({categories:await listCategories(event),storefrontConfigured:true}))
