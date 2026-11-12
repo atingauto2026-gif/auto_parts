@@ -1,0 +1,91 @@
+/* ==========================================================================
+   Design tokens
+   --------------------------------------------------------------------------
+   RoadReady Auto palette: graphite, warm white and signal orange.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  --v-bg: #f5f4f0;
+  --v-bg-soft: #eceae5;
+  --v-surface: #ffffff;
+  --v-ink: #171a1c;
+  --v-ink-soft: #73797a;
+  --v-ink-faint: rgba(23, 26, 28, 0.45);
+  --v-line: rgba(23, 26, 28, 0.1);
+  --v-line-strong: rgba(23, 26, 28, 0.18);
+
+  --v-green: #e85d2a;
+  --v-green-hover: #c9481b;
+  --v-green-deep: #aa3915;
+  --v-orange: #e85d2a;
+  --v-accent: #ff9a70;
+  --v-on-green: #ffffff;
+
+  --v-shadow: 0 18px 50px rgba(23, 26, 28, 0.1);
+  --v-shadow-sm: 0 8px 24px rgba(23, 26, 28, 0.08);
+
+  /* Landing surfaces */
+  --v-card: #ffffff;
+  --v-tile: #efeeea;
+  --v-tile-img: #e7e5df;
+  --v-pattern: rgba(23, 26, 28, 0.035);
+  --v-pattern-2: rgba(23, 26, 28, 0.022);
+  --v-glow-1: rgba(232, 93, 42, 0.09);
+  --v-glow-2: rgba(232, 93, 42, 0.05);
+  --v-badge-bg: rgba(255, 255, 255, 0.96);
+  --v-surface-1: rgba(23, 26, 28, 0.025);
+  --v-surface-2: rgba(23, 26, 28, 0.04);
+
+  --v-font: "Barlow", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --v-font-display: "Barlow Condensed", "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --v-font-weight-regular: 400;
+  --v-font-weight-medium: 500;
+  --v-font-weight-semibold: 600;
+  --v-font-weight-bold: 700;
+  --v-font-weight-extrabold: 800;
+  --v-leading-tight: 1.02;
+  --v-leading-heading: 1.08;
+  --v-leading-body: 1.65;
+  --v-tracking-display: -0.035em;
+
+  --v-nav-h: 56px;
+  --v-max: 1200px;
+  --v-radius: 22px;
+  --v-radius-lg: 28px;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --v-bg: #101315;
+  --v-bg-soft: #171b1d;
+  --v-surface: #1b2022;
+  --v-ink: #f3f2ef;
+  --v-ink-soft: #aeb4b4;
+  --v-ink-faint: rgba(243, 242, 239, 0.45);
+  --v-line: rgba(255, 255, 255, 0.12);
+  --v-line-strong: rgba(255, 255, 255, 0.22);
+
+  --v-green: #ff8153;
+  --v-green-hover: #ff9a70;
+  --v-green-deep: #26150f;
+  --v-orange: #ff8153;
+  --v-accent: #ff9a70;
+  --v-on-green: #171a1c;
+
+  --v-shadow: 0 22px 70px rgba(0, 0, 0, 0.45);
+  --v-shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  --v-card: #1b2022;
+  --v-tile: #171b1d;
+  --v-tile-img: #101315;
+  --v-pattern: rgba(255, 255, 255, 0.025);
+  --v-pattern-2: rgba(255, 255, 255, 0.018);
+  --v-glow-1: rgba(255, 129, 83, 0.12);
+  --v-glow-2: rgba(255, 129, 83, 0.06);
+  --v-badge-bg: rgba(25, 30, 32, 0.94);
+  --v-surface-1: rgba(255, 255, 255, 0.035);
+  --v-surface-2: rgba(255, 255, 255, 0.025);
+}
