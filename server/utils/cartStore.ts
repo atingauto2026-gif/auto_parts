@@ -24,7 +24,7 @@ async function requireCart(event:H3Event):Promise<Cart>{
  return {id:rows[0].id,checkoutUrl:'',totalQuantity:0,subtotal:money(0,rows[0].currency_code),total:money(0,rows[0].currency_code),lines:[]}
 }
 export async function getCart(event:H3Event):Promise<Cart|null>{const id=readCartId(event);if(!id)return null;const cart=await loadCart(event,id);if(!cart)clearCartId(event);return cart}
-function rawVariantId(value:string):string{const match=value.match(/gid:\\/\\/supabase\\/ProductVariant\\/([0-9a-f-]{36})$/i);const id=match?.[1]??value;if(!/^[0-9a-f-]{36}$/i.test(id))throw new Error('Invalid product variant');return id}
+function rawVariantId(value:string):string{const id=value.split('/').at(-1)??value;if(!/^[0-9a-f-]{36}$/i.test(id))throw new Error('Invalid product variant');return id}
 export async function addLine(event:H3Event,variantId:string,quantity:number):Promise<Cart>{
  const cart=await requireCart(event),id=rawVariantId(variantId)
  const variants=await db<{id:string;available_for_sale:boolean}[]>(event,'product_variants',{query:{select:'id,available_for_sale',id:`eq.${id}`,limit:'1'}})
