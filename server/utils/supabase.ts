@@ -13,7 +13,8 @@ function readValue(event: H3Event | undefined, names: string[], configKey: strin
   const configured = config[configKey]
   if (configured != null && String(configured).trim()) return String(configured).trim()
   for (const name of names) {
-    const value = typeof process !== 'undefined' ? process.env?.[name] : undefined
+    const runtimeProcess = (globalThis as typeof globalThis & { process?: { env?: Record<string, string | undefined> } }).process
+    const value = runtimeProcess?.env?.[name]
     if (value != null && String(value).trim()) return String(value).trim()
   }
   return ''
@@ -46,5 +47,5 @@ export async function db<T>(
     ...(options.body !== undefined ? { body: options.body } : {}),
     retry: 0,
     timeout: 15000,
-  })
+  } as any) as T
 }
