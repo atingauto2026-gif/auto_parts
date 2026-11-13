@@ -26,6 +26,7 @@ async function requireCart(event:H3Event):Promise<Cart>{
 export async function getCart(event:H3Event):Promise<Cart|null>{const id=readCartId(event);if(!id)return null;const cart=await loadCart(event,id);if(!cart)clearCartId(event);return cart}
 function rawVariantId(value:string):string{const id=value.split('/').at(-1)??value;if(!/^[0-9a-f-]{36}$/i.test(id))throw new Error('Invalid product variant');return id}
 export async function addLine(event:H3Event,variantId:string,quantity:number):Promise<Cart>{
+ if(!Number.isInteger(quantity)||quantity<1||quantity>99)throw new Error('Quantity must be between 1 and 99')
  const cart=await requireCart(event),id=rawVariantId(variantId)
  const variants=await db<{id:string;available_for_sale:boolean}[]>(event,'product_variants',{query:{select:'id,available_for_sale',id:`eq.${id}`,limit:'1'}})
  if(!variants[0]||!variants[0].available_for_sale)throw new Error('This product is unavailable')
