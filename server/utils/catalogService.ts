@@ -14,7 +14,7 @@ function mapProduct(row:DbProduct):ShopProduct {
 function landingFromProduct(product:ShopProduct,stored:LandingContent|null):LandingContent {
  if(stored)return withDedicatedDefaults(stored,product.featuredImage?.url??'')
  const local=fallbackLanding(product.handle); if(local)return local
- const text=product.description.split(/(?<=[.!?])\\s+/).filter(Boolean)
+ const text=product.description.split(/(?<=[.!?])\s+/).filter(Boolean)
  return withDedicatedDefaults({code:product.title.split(/[—–|-]/)[0]?.trim()??product.title,name:product.title.split(/[—–|-]/).slice(1).join(' ').trim()||product.productType,category:product.productType.toLowerCase().replace(/[^a-z0-9]+/g,'-'),categoryLabel:product.productType||'Product',tagline:text[0]??product.title,lead:text.slice(0,2).join(' '),badges:product.tags.slice(0,6),stats:[],highlights:[],why:text.slice(1,7),features:[],metric:null,dataRows:[],gallery:[],safety:[],compare:null,scenarios:[],specs:[],kit:[],video:null,heroImage:product.featuredImage?.url??null,galleryImages:product.images.map(i=>i.url)},product.featuredImage?.url??'')
 }
 export async function listProducts(event:H3Event):Promise<{source:'supabase';products:ShopProduct[]}> {
