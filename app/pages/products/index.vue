@@ -129,14 +129,6 @@ useHead({
           <a-tag color="orange">{{ filtered.length }} {{ filtered.length === 1 ? 'item' : 'items' }}</a-tag>
         </div>
 
-        <a-alert
-          v-if="false"
-          class="catalogue-preview-alert"
-          type="info"
-          show-icon
-          message="Preview catalogue"
-          description="These are demonstration products and prices. Replace them with your approved product catalogue before accepting orders."
-        />
 
         <div v-if="filtered.length" class="p-grid">
           <ProductCard v-for="product in filtered" :key="product.id" :product="product" />
