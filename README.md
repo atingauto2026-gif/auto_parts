@@ -41,7 +41,7 @@ Cart IDs are stored in an HttpOnly, SameSite=Lax cookie. Checkout remains disabl
 ### Deploy
 
 1. Add the two server-only variables to Cloudflare Pages project settings.
-2. Deploy the `feat/supabase-backend` branch or merge its pull request.
+2. Deploy the `main` branch after the Supabase migration is merged.
 3. Verify product/category pages, cart operations and contact submissions on the deployed preview.
 4. Replace demonstration catalog records, images and AUD prices with verified inventory and pricing.
 

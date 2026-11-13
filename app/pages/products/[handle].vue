@@ -10,7 +10,7 @@ const config = useRuntimeConfig()
 const { add, pending, checkoutEnabled } = useCart()
 
 const { data, error } = await useFetch<{
-  source: 'shopify' | 'fallback'
+  source: 'supabase'
   product: ShopProduct
   landing: LandingContent
 }>(() => `/api/products/${route.params.handle}`, { key: 'product-detail' })
@@ -76,7 +76,7 @@ const compareAt = computed(() => {
 
 const inStock = computed(() => variant.value?.availableForSale ?? product.value.availableForSale)
 
-/** Only Shopify-backed variants carry a price and can be purchased. */
+/** Variants with a stored price can be added to the persistent cart. */
 const purchasable = computed(() => Boolean(variant.value?.price))
 
 const whatsappHref = computed(() => {
@@ -349,8 +349,8 @@ if (faqLd.value) {
               class="dl-commerce-alert"
               type="info"
               show-icon
-              message="Preview catalogue"
-              description="This preview uses sample products, prices and imagery. Connect a Shopify Storefront API token to load your live catalog, inventory and checkout."
+              message="Checkout not yet available"
+              description="Your product catalogue and cart are powered by Supabase. Online checkout will be enabled after a payment provider is connected."
             />
           </div>
 

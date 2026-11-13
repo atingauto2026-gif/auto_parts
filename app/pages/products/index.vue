@@ -18,7 +18,7 @@ const { data: categoryData } = await useFetch<{ categories: CatalogCategory[] }>
 const products = computed(() => catalog.value?.products ?? [])
 const categories = computed(() => categoryData.value?.categories ?? [])
 const categoryOptions = computed(() => categories.value.map((item) => ({ label: item.label, value: item.id })))
-const isFallback = computed(() => catalog.value?.source === 'fallback')
+
 
 const activeCategory = computed(() => String(route.query.category ?? ''))
 const activeSearch = computed(() => String(route.query.q ?? '').trim())
@@ -129,14 +129,6 @@ useHead({
           <a-tag color="orange">{{ filtered.length }} {{ filtered.length === 1 ? 'item' : 'items' }}</a-tag>
         </div>
 
-        <a-alert
-          v-if="isFallback"
-          class="catalogue-preview-alert"
-          type="info"
-          show-icon
-          message="Preview catalogue"
-          description="These sample products and prices are for preview only. Connect your Shopify Storefront API to load your live catalog, inventory and checkout."
-        />
 
         <div v-if="filtered.length" class="p-grid">
           <ProductCard v-for="product in filtered" :key="product.id" :product="product" />
