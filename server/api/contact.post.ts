@@ -1,3 +1,55 @@
 import { db } from '../utils/supabase'
-interface Body{name?:string;email?:string;phone?:string;company?:string;product?:string;message?:string;leadType?:'home_demo'|'contact_page'|'product_quote'}
-export default defineEventHandler(async(event)=>{const body=await readBody<Body>(event);const name=String(body?.name??'').trim(),email=String(body?.email??'').trim().toLowerCase(),message=String(body?.message??'').trim(),leadType=body?.leadType??'contact_page',phone=String(body?.phone??'').trim(),company=String(body?.company??'').trim(),product=String(body?.product??'').trim();if(!name||!email||!message)throw createError({statusCode:400,statusMessage:'Name, email and message are required.'});if(name.length>160||email.length>254||message.length>10000||phone.length>40||company.length>200||product.length>300)throw createError({statusCode:400,statusMessage:'One or more fields exceed the allowed length.'});if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email))throw createError({statusCode:400,statusMessage:'Please enter a valid email address.'});if(!['home_demo','contact_page','product_quote'].includes(leadType))throw createError({statusCode:400,statusMessage:'Invalid enquiry type.'});await db(event,'leads',{method:'POST',body:{name,email,phone:phone||null,company:company||null,product:product||null,message,lead_type:leadType,source_url:getRequestURL(event).origin},prefer:'return=minimal'});return {ok:true}})
+
+interface Body {
+  name?: string
+  email?: string
+  phone?: string
+  company?: string
+  product?: string
+  message?: string
+  leadType?: 'home_demo' | 'contact_page' | 'product_quote'
+}
+
+export default defineEventHandler(async (event) => {
+  const body = await readBody<Body>(event)
+  const name = String(body?.name ?? '').trim()
+  const email = String(body?.email ?? '').trim().toLowerCase()
+  const message = String(body?.message ?? '').trim()
+  const leadType = body?.leadType ?? 'contact_page'
+  const phone = String(body?.phone ?? '').trim()
+  const company = String(body?.company ?? '').trim()
+  const product = String(body?.product ?? '').trim()
+
+  if (!name || !email || !message) {
+    throw createError({ statusCode: 400, statusMessage: 'Name, email and message are required.' })
+  }
+
+  if (name.length > 160 || email.length > 254 || message.length > 10000 || phone.length > 40 || company.length > 200 || product.length > 300) {
+    throw createError({ statusCode: 400, statusMessage: 'One or more fields exceed the allowed length.' })
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    throw createError({ statusCode: 400, statusMessage: 'Please enter a valid email address.' })
+  }
+
+  if (!['home_demo', 'contact_page', 'product_quote'].includes(leadType)) {
+    throw createError({ statusCode: 400, statusMessage: 'Invalid enquiry type.' })
+  }
+
+  await db(event, 'leads', {
+    method: 'POST',
+    body: {
+      name,
+      email,
+      phone: phone || null,
+      company: company || null,
+      product: product || null,
+      message,
+      lead_type: leadType,
+      source_url: getRequestURL(event).origin,
+    },
+    prefer: 'return=minimal',
+  })
+
+  return { ok: true }
+})
