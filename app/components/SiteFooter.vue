@@ -3,12 +3,12 @@ const config = useRuntimeConfig()
 const year = new Date().getFullYear()
 
 const productLinks = [
-  { label: 'Lighting', to: '/products?category=lighting' },
-  { label: 'Performance', to: '/products?category=performance' },
-  { label: 'Interior', to: '/products?category=interior' },
-  { label: 'Exterior', to: '/products?category=exterior' },
-  { label: 'Tools & Recovery', to: '/products?category=tools' },
-  { label: 'Maintenance', to: '/products?category=maintenance' },
+  { label: 'Coolant Temperature Sensor', to: '/products?category=coolant-temperature-sensor' },
+  { label: 'Temperature Control Switch', to: '/products?category=temperature-control-switch' },
+  { label: 'Reverse Light Switch', to: '/products?category=reverse-light-switch' },
+  { label: 'Solenoid Valve', to: '/products?category=solenoid-valve' },
+  { label: 'Oil Pressure Alarm', to: '/products?category=oil-pressure-alarm' },
+  { label: 'Tire Pressure Sensor', to: '/products?category=tire-pressure-sensor' },
 ]
 
 const companyLinks = [
@@ -26,7 +26,7 @@ const companyLinks = [
         <div class="site-footer__brand">
           <div class="site-footer__wordmark">ROADREADY<span>AUTO PARTS & ACCESSORIES</span></div>
           <p class="site-footer__tagline">
-            Thoughtful upgrades and dependable essentials for every drive.
+            Automotive sensors, switches and control components engineered for dependable performance.
           </p>
         </div>
 
@@ -58,7 +58,7 @@ const companyLinks = [
 
       <div class="site-footer__bottom">
         <span>© {{ year }} RoadReady Auto. All rights reserved.</span>
-        <span>Payments and orders are processed securely by Shopify.</span>
+        <span>Product enquiries and fitment support from the RoadReady team.</span>
       </div>
     </div>
   </footer>
