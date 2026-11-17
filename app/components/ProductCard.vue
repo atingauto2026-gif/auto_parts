@@ -3,20 +3,6 @@ import type { ShopProduct } from '#shared/types'
 
 const props = defineProps<{ product: ShopProduct }>()
 
-const price = computed(() =>
-  props.product.priceRange
-    ? formatMoney(props.product.priceRange.minVariantPrice)
-    : 'Request a quote',
-)
-const compareAt = computed(() => {
-  const value = props.product.compareAtPrice
-  const range = props.product.priceRange
-  if (!value || !range) return null
-  return Number(value.amount) > Number(range.minVariantPrice.amount)
-    ? formatMoney(value)
-    : null
-})
-
 const flag = computed(() => {
   if (props.product.tags.includes('New Release')) return 'New'
   if (props.product.tags.includes('Best Seller')) return 'Best seller'
@@ -47,10 +33,7 @@ const short = computed(() => {
       <p class="p-card__desc">{{ short }}</p>
 
       <div class="p-card__foot">
-        <span class="p-card__price">
-          {{ price }}
-          <small v-if="compareAt" class="p-card__was">{{ compareAt }}</small>
-        </span>
+        <span class="p-card__price">Request a quote</span>
         <span class="p-card__cta">View details</span>
       </div>
     </div>
