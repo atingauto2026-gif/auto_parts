@@ -1,49 +1,45 @@
 <script setup lang="ts">
 import { theme as antdThemeTools } from 'ant-design-vue'
 
-const { refresh } = useCart()
 const { scheme, sync } = useTheme()
-
-// Cart is read once per page load so the header badge is server-rendered.
-await callOnce('roadready-cart-bootstrap', () => refresh())
 
 onMounted(sync)
 
 const antdTheme = computed(() => {
   const dark = scheme.value === 'dark'
-  const primary = dark ? '#ff8153' : '#e85d2a'
+  const primary = dark ? '#e58a4c' : '#d97732'
 
   return {
     algorithm: dark ? antdThemeTools.darkAlgorithm : antdThemeTools.defaultAlgorithm,
     token: {
       // RoadReady Auto palette, with Ant Design semantic states.
       colorPrimary: primary,
-      colorPrimaryHover: dark ? '#ff9a70' : '#c9481b',
-      colorPrimaryActive: dark ? '#e85d2a' : '#aa3915',
+      colorPrimaryHover: dark ? '#f0a36c' : '#b85d25',
+      colorPrimaryActive: dark ? '#d97732' : '#8f461d',
       colorInfo: primary,
       colorSuccess: dark ? '#72d4a0' : '#389e0d',
       colorWarning: dark ? '#ff9a70' : '#c85a0a',
       colorError: dark ? '#ff7875' : '#cf3f36',
 
       // Surfaces and text stay in sync with tokens.css.
-      colorBgLayout: dark ? '#101315' : '#f5f4f0',
-      colorBgContainer: dark ? '#1b2022' : '#ffffff',
-      colorBgElevated: dark ? '#22282a' : '#ffffff',
+      colorBgLayout: dark ? '#10171c' : '#f1f3f4',
+      colorBgContainer: dark ? '#1c272e' : '#ffffff',
+      colorBgElevated: dark ? '#24313a' : '#ffffff',
       colorFillAlter: dark ? 'rgba(255,255,255,.045)' : 'rgba(17,17,16,.035)',
       colorFillSecondary: dark ? 'rgba(255,255,255,.07)' : 'rgba(17,17,16,.045)',
-      colorText: dark ? '#f3f2ef' : '#171a1c',
-      colorTextHeading: dark ? '#f3f2ef' : '#171a1c',
-      colorTextSecondary: dark ? '#aeb4b4' : '#73797a',
+      colorText: dark ? '#f0f3f4' : '#17212a',
+      colorTextHeading: dark ? '#f0f3f4' : '#17212a',
+      colorTextSecondary: dark ? '#aab6bd' : '#66737d',
       colorTextTertiary: dark ? 'rgba(243,242,239,.62)' : 'rgba(23,26,28,.55)',
       colorTextLabel: dark ? '#c6cec6' : '#50534f',
       colorBorder: dark ? 'rgba(255,255,255,.16)' : 'rgba(17,17,16,.14)',
       colorBorderSecondary: dark ? 'rgba(255,255,255,.10)' : 'rgba(17,17,16,.09)',
       colorSplit: dark ? 'rgba(255,255,255,.10)' : 'rgba(17,17,16,.08)',
       colorLink: primary,
-      colorLinkHover: dark ? '#ff9a70' : '#c9481b',
-      colorLinkActive: dark ? '#e85d2a' : '#aa3915',
-      colorIcon: dark ? '#aeb4b4' : '#73797a',
-      colorIconHover: dark ? '#f3f2ef' : '#171a1c',
+      colorLinkHover: dark ? '#f0a36c' : '#b85d25',
+      colorLinkActive: dark ? '#d97732' : '#8f461d',
+      colorIcon: dark ? '#aab6bd' : '#66737d',
+      colorIconHover: dark ? '#f0f3f4' : '#17212a',
 
       // Barlow is the shared interface and display face.
       fontFamily: '"Barlow", system-ui, -apple-system, "Segoe UI", Arial, sans-serif',
@@ -65,14 +61,14 @@ const antdTheme = computed(() => {
       lineHeightHeading4: 1.18,
       lineHeightHeading5: 1.25,
 
-      borderRadius: 12,
-      borderRadiusSM: 8,
-      borderRadiusLG: 18,
-      borderRadiusOuter: 22,
+      borderRadius: 8,
+      borderRadiusSM: 4,
+      borderRadiusLG: 12,
+      borderRadiusOuter: 12,
       controlHeight: 44,
       controlHeightSM: 32,
       controlHeightLG: 50,
-      controlOutline: dark ? 'rgba(255,129,83,.20)' : 'rgba(232,93,42,.16)',
+      controlOutline: dark ? 'rgba(229,138,76,.20)' : 'rgba(217,119,50,.16)',
       controlOutlineWidth: 3,
     },
   }
