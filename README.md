@@ -4,7 +4,7 @@ Nuxt 4 + Vue 3 storefront with a Supabase PostgreSQL backend.
 
 ## Supabase backend setup
 
-The Shopify backend has been replaced with Supabase Postgres. Product/category reads, visitor carts and enquiry submissions are served by Nuxt Nitro routes and the Supabase REST Data API.
+The Shopify backend has been replaced with Supabase Postgres. Product/category reads and enquiry submissions are served by Nuxt Nitro routes and the Supabase REST Data API. The storefront is a catalogue and quote-request experience; cart and checkout UI are disabled.
 
 ### Required server-only environment variables
 
@@ -21,7 +21,7 @@ Project ref: `npxpxlosubxgkgsbyfnv`.
 
 ### Database
 
-The migration `replace_shopify_with_supabase_storefront` creates `categories`, `products`, `product_variants`, `carts`, `cart_items` and `leads`. It seeds six categories, eight demonstration products and eight variants. Prices are demonstration AUD values; replace them with approved catalog data before taking real orders.
+The migration `replace_shopify_with_supabase_storefront` creates `categories`, `products`, `product_variants`, `carts`, `cart_items` and `leads`. The public catalogue uses six specialist categories: Coolant Temperature Sensor, Temperature Control Switch, Reverse Light Switch, Solenoid Valve, Oil Pressure Alarm and Tire Pressure Sensor. Original demo products are unpublished; publish approved inventory with verified fitment data before launch.
 
 All tables have RLS enabled and no public/anon/authenticated table grants or policies. Server routes use the private Supabase secret key. Do not expose that key to the browser.
 
@@ -30,19 +30,15 @@ All tables have RLS enabled and no public/anon/authenticated table grants or pol
 - `GET /api/products`
 - `GET /api/products/:handle`
 - `GET /api/categories`
-- `GET /api/cart`
-- `POST /api/cart/lines`
-- `PATCH /api/cart/lines`
-- `DELETE /api/cart/lines?lineId=...`
 - `POST /api/contact`
 
-Cart IDs are stored in an HttpOnly, SameSite=Lax cookie. Checkout remains disabled until a payment provider and order workflow are implemented.
+Legacy cart tables and API handlers remain in the database/codebase for backwards compatibility, but are not exposed in the storefront UI.
 
 ### Deploy
 
 1. Add the two server-only variables to Cloudflare Pages project settings.
 2. Deploy the `main` branch after the Supabase migration is merged.
-3. Verify product/category pages, cart operations and contact submissions on the deployed preview.
-4. Replace demonstration catalog records, images and AUD prices with verified inventory and pricing.
+3. Verify product/category pages, quote/contact submissions and responsive layouts on the deployed preview.
+4. Publish approved product records, images, fitment references and quote details.
 
-The Supabase database migration has already been applied to the linked project. Repository changes do not deploy Cloudflare automatically.
+The Supabase database migration has already been applied to the linked project. A push to `main` triggers the GitHub Actions Cloudflare Pages deployment workflow; preview branches do not deploy to production.

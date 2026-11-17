@@ -62,7 +62,7 @@ const title = computed(() =>
 useSeoMeta({
   title: () => `${title.value} | RoadReady Auto`,
   description:
-    'Browse auto parts and accessories, including lighting, performance upgrades, interior essentials and tools.',
+    'Browse RoadReady automotive sensors, switches, solenoid valves and pressure monitoring components.',
   ogTitle: () => `${title.value} | RoadReady Auto`,
   ogDescription:
     'Find parts and accessories for your next drive.',
@@ -89,12 +89,10 @@ useHead({
           {{ activeLabel }}
         </a-typography-title>
         <a-typography-paragraph class="pg-hero__description">
-          Find practical upgrades and everyday essentials. Always confirm your vehicle’s make,
-          model and year before ordering.
+          Explore our automotive components. Share your vehicle details and target part number so our team can confirm fitment.
         </a-typography-paragraph>
         <div class="pg-hero__meta">
           <span>{{ filtered.length }} products</span>
-          <span>Prices in AUD</span>
           <span>Vehicle fitment varies by product</span>
         </div>
       </div>
@@ -108,7 +106,7 @@ useHead({
             <a-input-search
               id="catalogue-search"
               v-model:value="searchInput"
-              placeholder="Try “LED”, “floor mats” or “tools”"
+              placeholder="Try “coolant sensor”, “reverse switch” or a part number"
               enter-button="Search"
               @search="searchProducts"
             />

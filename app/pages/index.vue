@@ -27,14 +27,14 @@ function findParts() {
 }
 
 useSeoMeta({
-  title: 'Auto parts for every road',
+  title: 'Automotive sensors & control components | RoadReady Auto',
   description:
-    'Shop carefully selected auto parts and accessories for your next drive. Find lighting, performance upgrades, interior essentials and more.',
-  ogTitle: 'RoadReady Auto | Parts for every road',
+    'Explore automotive sensors, switches, solenoid valves and pressure monitoring components. Request wholesale pricing and fitment support.',
+  ogTitle: 'RoadReady Auto | Automotive components',
   ogDescription:
     'Thoughtful upgrades, dependable essentials and a better way to shop auto parts.',
   ogType: 'website',
-  ogImage: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1400&q=85',
+  ogImage: 'https://di-uploads-pod47.dealerinspire.com/beamantoyota1/uploads/2025/05/2025_Toyota_RAV4_blue_SUV_exterior.png',
 })
 
 useHead({
@@ -53,16 +53,16 @@ useHead({
     <section class="home-hero">
       <img
         class="home-hero__image"
-        src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=2200&q=90"
-        alt="Sport sedan ready for the open road"
+        src="https://di-uploads-pod47.dealerinspire.com/beamantoyota1/uploads/2025/05/2025_Toyota_RAV4_blue_SUV_exterior.png"
+        alt="2025 Toyota RAV4, a representative vehicle for RoadReady automotive components"
         fetchpriority="high"
       >
       <div class="home-hero__shade"></div>
       <div class="home-container home-hero__content">
         <p class="home-kicker"><span></span>Parts for every road</p>
-        <h1>Make every<br><em>mile count.</em></h1>
+        <h1>Precision<br><em>in motion.</em></h1>
         <p class="home-hero__text">
-          The upgrades you want. The essentials you need. Find your next favorite thing for the drive.
+          Sensors, switches and control components built for dependable vehicle performance. Find the right part with support from our team.
         </p>
         <form class="home-search" role="search" @submit.prevent="findParts">
           <label class="v-sr-only" for="part-search">Search auto parts and accessories</label>
@@ -70,7 +70,7 @@ useHead({
             id="part-search"
             v-model="search"
             type="search"
-            placeholder="Search parts, accessories, or brands"
+            placeholder="Search by product name, OE number or part number"
           >
           <button type="submit" aria-label="Search">
             <span>Find parts</span>
@@ -78,8 +78,8 @@ useHead({
           </button>
         </form>
         <div class="home-hero__links">
-          <NuxtLink to="/products">Shop all parts <AppIcon name="arrow-right" :size="14" /></NuxtLink>
-          <span>Popular: LED lighting · floor mats · dash cams</span>
+          <NuxtLink to="/products">Explore components <AppIcon name="arrow-right" :size="14" /></NuxtLink>
+          <span>Popular: Coolant sensors · Solenoid valves · TPMS</span>
         </div>
       </div>
       <div class="home-hero__index">01 / DRIVE BETTER</div>
@@ -87,9 +87,9 @@ useHead({
 
     <section class="home-assurance" aria-label="Why shop with us">
       <div class="home-container home-assurance__grid">
-        <div><span class="home-assurance__mark">01</span><p><strong>Picked with purpose</strong><small>Quality gear, no guesswork</small></p></div>
-        <div><span class="home-assurance__mark">02</span><p><strong>Fitment-first help</strong><small>Get the right part for your ride</small></p></div>
-        <div><span class="home-assurance__mark">03</span><p><strong>Ready for the road</strong><small>Support from real people</small></p></div>
+        <div><span class="home-assurance__mark">01</span><p><strong>Precision components</strong><small>Consistent quality standards</small></p></div>
+        <div><span class="home-assurance__mark">02</span><p><strong>Application support</strong><small>Find the correct part number</small></p></div>
+        <div><span class="home-assurance__mark">03</span><p><strong>Built for reliability</strong><small>Responsive technical assistance</small></p></div>
       </div>
     </section>
 
@@ -97,8 +97,8 @@ useHead({
       <div class="home-container">
         <div class="home-section__head">
           <div>
-            <p class="home-kicker home-kicker--dark"><span></span>Find your fit</p>
-            <h2>Shop by category</h2>
+            <p class="home-kicker home-kicker--dark"><span></span>Our product range</p>
+            <h2>Explore product categories</h2>
           </div>
           <NuxtLink to="/products" class="home-text-link">Explore all parts <AppIcon name="arrow-right" :size="15" /></NuxtLink>
         </div>
@@ -122,8 +122,8 @@ useHead({
       <div class="home-container">
         <div class="home-section__head">
           <div>
-            <p class="home-kicker home-kicker--dark"><span></span>Good gear, great drives</p>
-            <h2>Shop the favorites</h2>
+            <p class="home-kicker home-kicker--dark"><span></span>RoadReady catalogue</p>
+            <h2>Featured components</h2>
           </div>
           <NuxtLink to="/products" class="home-text-link">View the collection <AppIcon name="arrow-right" :size="15" /></NuxtLink>
         </div>
@@ -131,7 +131,7 @@ useHead({
           <ProductCard v-for="product in featured" :key="product.id" :product="product" />
         </div>
         <div v-else class="home-empty">
-          <p>Our next collection is on its way.</p>
+          <p>Our specialist catalogue is being prepared. Contact our team for availability, MOQ and OE reference support.</p>
           <NuxtLink to="/products" class="home-text-link">Browse all parts <AppIcon name="arrow-right" :size="15" /></NuxtLink>
         </div>
       </div>
@@ -146,17 +146,17 @@ useHead({
         >
       </div>
       <div class="home-callout__copy">
-        <p class="home-kicker"><span></span>Not sure what fits?</p>
-        <h2>Let’s get your<br><em>fitment right.</em></h2>
-        <p>Vehicle fitment can get complicated. Tell us what you drive and what you’re looking for — we’ll help you narrow it down.</p>
-        <NuxtLink to="/contact" class="home-button">Talk to our team <AppIcon name="arrow-right" :size="16" /></NuxtLink>
+        <p class="home-kicker"><span></span>Need help identifying a part?</p>
+        <h2>Let’s confirm<br><em>the right fit.</em></h2>
+        <p>Send us the vehicle make, model, year or OE reference. Our team will help identify the correct component and application.</p>
+        <NuxtLink to="/contact" class="home-button">Request product support <AppIcon name="arrow-right" :size="16" /></NuxtLink>
       </div>
     </section>
 
     <section class="home-bottom">
       <div class="home-container home-bottom__inner">
-        <div><span>GOOD PARTS.</span><span>BETTER MILES.</span></div>
-        <NuxtLink to="/products" class="home-bottom__link">Find your next upgrade <AppIcon name="arrow-right" :size="16" /></NuxtLink>
+        <div><span>PRECISION PARTS.</span><span>BUILT TO PERFORM.</span></div>
+        <NuxtLink to="/products" class="home-bottom__link">Request a product quote <AppIcon name="arrow-right" :size="16" /></NuxtLink>
       </div>
     </section>
   </div>
@@ -166,7 +166,7 @@ useHead({
 .store-home {
   --home-ink: #171a1c;
   --home-muted: #73797a;
-  --home-accent: #e85d2a;
+  --home-accent: #d97732;
   --home-paper: #f5f4f0;
   color: var(--home-ink);
 }
@@ -174,7 +174,7 @@ useHead({
 .home-container { width: min(1240px, calc(100% - 48px)); margin-inline: auto; }
 .home-announcement {
   display: flex; justify-content: center; gap: 10px; padding: 10px 20px;
-  background: #e85d2a; color: #fff; font-size: 11px; font-weight: 700;
+  background: #d97732; color: #fff; font-size: 11px; font-weight: 700;
   letter-spacing: .12em; text-transform: uppercase;
 }
 .home-announcement__dot { opacity: .7; }
@@ -185,7 +185,7 @@ useHead({
 .home-hero__image, .home-hero__shade { position: absolute; inset: 0; width: 100%; height: 100%; }
 .home-hero__image { object-fit: cover; object-position: center 54%; }
 .home-hero__shade {
-  background: linear-gradient(90deg, rgba(13,17,19,.91) 0%, rgba(13,17,19,.72) 39%, rgba(13,17,19,.08) 100%),
+  background: linear-gradient(90deg, rgba(13,19,24,.94) 0%, rgba(13,19,24,.76) 39%, rgba(13,17,19,.08) 100%),
     linear-gradient(0deg, rgba(13,17,19,.30), transparent 36%);
 }
 .home-hero__content { position: relative; z-index: 1; padding-block: 92px 100px; }
@@ -203,20 +203,20 @@ useHead({
 .home-hero__text { max-width: 440px; margin-top: 25px; color: rgba(255,255,255,.77); font-size: 16px; }
 .home-search {
   display: flex; width: min(560px, 100%); margin-top: 31px; padding: 5px;
-  border: 1px solid rgba(255,255,255,.25); border-radius: 8px; background: rgba(255,255,255,.96);
+  border: 1px solid rgba(255,255,255,.25); border-radius: 3px; background: rgba(255,255,255,.97);
 }
 .home-search input { min-width: 0; flex: 1; padding: 0 15px; border: 0; outline: 0; background: transparent; color: #171a1c; font-size: 14px; }
 .home-search button, .home-button {
   display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-  padding: 13px 17px; border: 0; border-radius: 5px; background: #e85d2a;
+  padding: 13px 17px; border: 0; border-radius: 3px; background: #d97732;
   color: #fff; font-size: 12px; font-weight: 800; white-space: nowrap; cursor: pointer;
   transition: background .2s, transform .2s;
 }
-.home-search button:hover, .home-button:hover { background: #c9481b; color: #fff; transform: translateY(-1px); }
+.home-search button:hover, .home-button:hover { background: #ad5620; color: #fff; transform: translateY(-1px); }
 .home-hero__links { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 19px; color: rgba(255,255,255,.6); font-size: 11px; }
 .home-hero__links a { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-weight: 700; }
 .home-hero__index { position: absolute; right: 30px; bottom: 28px; color: rgba(255,255,255,.7); font-size: 10px; font-weight: 700; letter-spacing: .16em; }
-.home-assurance { background: #191d1f; color: #fff; }
+.home-assurance { background: #151d23; color: #fff; }
 .home-assurance__grid { display: grid; grid-template-columns: repeat(3, 1fr); }
 .home-assurance__grid > div { display: flex; align-items: center; gap: 16px; padding: 25px 28px; border-right: 1px solid rgba(255,255,255,.12); }
 .home-assurance__grid > div:first-child { padding-left: 0; }
@@ -233,7 +233,7 @@ useHead({
 .home-text-link { display: inline-flex; align-items: center; gap: 9px; color: #33393b; font-size: 12px; font-weight: 700; }
 .home-text-link:hover { color: var(--home-accent); }
 .home-category-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.home-category { position: relative; display: block; min-height: 225px; overflow: hidden; border-radius: 8px; background: #292f32; color: #fff; }
+.home-category { position: relative; display: block; min-height: 225px; overflow: hidden; border-radius: 3px; background: #292f32; color: #fff; }
 .home-category::after { position: absolute; inset: 0; content: ""; background: linear-gradient(0deg, rgba(11,14,15,.8), transparent 65%); }
 .home-category img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .45s; }
 .home-category:hover img { transform: scale(1.05); }
@@ -252,7 +252,7 @@ useHead({
 .home-callout h2 { margin-top: 19px; font-size: clamp(3rem, 5.2vw, 5.7rem); line-height: .88; letter-spacing: -.05em; text-transform: uppercase; }
 .home-callout__copy > p:not(.home-kicker) { max-width: 420px; margin-top: 19px; color: rgba(255,255,255,.67); font-size: 14px; }
 .home-button { margin-top: 25px; }
-.home-bottom { background: #e85d2a; color: #fff; }
+.home-bottom { background: #d97732; color: #fff; }
 .home-bottom__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 40px; }
 .home-bottom__inner > div { display: flex; flex-direction: column; font-family: var(--v-font-display); font-size: clamp(2rem, 4.5vw, 4rem); font-weight: 800; line-height: .88; letter-spacing: -.04em; }
 .home-bottom__link { display: inline-flex; align-items: center; gap: 12px; padding: 13px 16px; border: 1px solid rgba(255,255,255,.55); border-radius: 5px; font-size: 12px; font-weight: 700; }

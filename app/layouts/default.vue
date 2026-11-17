@@ -5,6 +5,5 @@
       <slot />
     </main>
     <SiteFooter />
-    <CartDrawer />
   </div>
 </template>
