@@ -91,15 +91,42 @@ export async function sendAdminMagicLink(event: H3Event) {
     })
     return { success: true }
   } catch (error: any) {
-    const data = error?.data ?? error?.response?._data ?? {}
+    const response = error?.response
+    const data = error?.data ?? response?._data ?? {}
     const detail = data.msg || data.message || data.error_description || data.error || data.code || error?.statusMessage || error?.message
-    const status = error?.statusCode || error?.status || data.status
-    const safeDetail = typeof detail === 'string' ? detail.slice(0, 240) : ''
+    const status = response?.status || error?.statusCode || error?.status || data.status
+    const safeDetail = typeof detail === 'string' ? detail.replace(/[\\r\\n]+/g, ' ').slice(0, 180) : ''
+    const responseUrl = typeof response?.url === 'string'
+      ? response.url.replace(/[?#].*$/, '')
+      : ''
+    const header = (name: string) => {
+      const value = response?.headers?.get?.(name)
+      return typeof value === 'string' ? value.replace(/[\\r\\n]+/g, ' ').slice(0, 100) : ''
+    }
+    const diagnostics = [
+      'method=POST',
+      'endpoint=/auth/v1/otp',
+      responseUrl ? `response_url=${responseUrl}` : '',
+      header('allow') ? `allow=${header('allow')}` : '',
+      header('server') ? `server=${header('server')}` : '',
+      header('via') ? `via=${header('via')}` : '',
+      header('cf-ray') ? `cf-ray=${header('cf-ray')}` : '',
+      header('content-type') ? `content_type=${header('content-type')}` : '',
+    ].filter(Boolean).join('; ')
+    console.error('[admin-auth] OTP request failed', {
+      method: 'POST',
+      endpoint: '/auth/v1/otp',
+      status: status ?? null,
+      responseUrl,
+      allow: header('allow') || null,
+      server: header('server') || null,
+      via: header('via') || null,
+      cfRay: header('cf-ray') || null,
+      contentType: header('content-type') || null,
+    })
     throw createError({
       statusCode: 502,
-      statusMessage: safeDetail
-        ? `Supabase Auth error${status ? ` (${status})` : ''}: ${safeDetail}`
-        : `Could not send sign-in email${status ? ` (HTTP ${status})` : ''}. Check Supabase Auth email/SMTP settings.`,
+      statusMessage: `Supabase Auth error${status ? ` (${status})` : ''}: ${safeDetail || 'Request failed'}. [${diagnostics}]`,
     })
   }
 }
