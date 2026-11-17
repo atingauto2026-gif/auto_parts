@@ -16,12 +16,12 @@ const photos = {
 }
 
 export const CATEGORY_META: CatalogCategory[] = [
-  { id: 'lighting', label: 'Lighting', blurb: 'See more. Drive with confidence.', image: photos.car },
-  { id: 'performance', label: 'Performance', blurb: 'Parts that put you in control.', image: photos.wheel },
-  { id: 'interior', label: 'Interior', blurb: 'A better fit for every journey.', image: photos.interior },
-  { id: 'exterior', label: 'Exterior', blurb: 'Protection and utility, made to fit.', image: photos.road },
-  { id: 'tools', label: 'Tools & Recovery', blurb: 'Be ready for the road ahead.', image: photos.tools },
-  { id: 'maintenance', label: 'Maintenance', blurb: 'Keep your vehicle running right.', image: photos.workshop },
+  { id: 'coolant-temperature-sensor', label: 'Coolant Temperature Sensor', blurb: 'Accurate engine and coolant temperature monitoring components.', image: photos.workshop },
+  { id: 'temperature-control-switch', label: 'Temperature Control Switch', blurb: 'Reliable thermal switching and temperature regulation components.', image: photos.tools },
+  { id: 'reverse-light-switch', label: 'Reverse Light Switch', blurb: 'Precision reverse signal switches for dependable lighting activation.', image: photos.car },
+  { id: 'solenoid-valve', label: 'Solenoid Valve', blurb: 'Electromechanical valves engineered for consistent fluid and pressure control.', image: photos.wheel },
+  { id: 'oil-pressure-alarm', label: 'Oil Pressure Alarm', blurb: 'Oil pressure monitoring and warning components for engine protection.', image: photos.tools },
+  { id: 'tire-pressure-sensor', label: 'Tire Pressure Sensor', blurb: 'TPMS components designed to support accurate tire pressure monitoring.', image: photos.wheel },
 ]
 
 interface Seed {
