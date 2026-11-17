@@ -131,7 +131,7 @@ useHead({
           <ProductCard v-for="product in featured" :key="product.id" :product="product" />
         </div>
         <div v-else class="home-empty">
-          <p>Our next collection is on its way.</p>
+          <p>Our specialist catalogue is being prepared. Contact our team for availability, MOQ and OE reference support.</p>
           <NuxtLink to="/products" class="home-text-link">Browse all parts <AppIcon name="arrow-right" :size="15" /></NuxtLink>
         </div>
       </div>
