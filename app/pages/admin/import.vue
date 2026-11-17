@@ -2,7 +2,6 @@
 type PreviewRow = { factoryNo: string; oem: string; carModel: string; imageCount: number; category: string }
 
 useSeoMeta({ title: 'Product Import' })
-definePageMeta({ middleware: 'admin-auth' })
 
 const csvText = ref('')
 const fileName = ref('')
