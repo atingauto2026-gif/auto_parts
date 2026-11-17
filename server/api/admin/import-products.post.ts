@@ -164,7 +164,7 @@ export default defineEventHandler(async (event) => {
 
     try {
       const existing = await db<Array<{ id: string; handle: string }>>(event, 'products', {
-        query: { select: 'id,handle', factory_no: `eq.${factoryNo}`, limit: '3' },
+        query: { select: 'id,handle', factory_no: `eq.${factoryNo}`, oem: `eq.${oem}`, limit: '3' },
       })
       if (existing.length > 1) {
         report.push({ factoryNo, status: 'skipped', message: 'More than one existing product has this factory number; manual review required.' })
