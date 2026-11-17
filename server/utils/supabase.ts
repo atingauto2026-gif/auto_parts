@@ -26,6 +26,38 @@ export function supabaseConfig(event?: H3Event): SupabaseConfig {
   return { url, key }
 }
 
+
+export function supabaseAuthConfig(event: H3Event) {
+  const url = readValue(event, ['SUPABASE_URL', 'NUXT_SUPABASE_URL'], 'supabaseUrl').replace(/\/$/, '')
+  const key = readValue(event, ['SUPABASE_PUBLISHABLE_KEY', 'SUPABASE_ANON_KEY'], 'supabasePublishableKey')
+  if (!url || !key) throw createError({ statusCode: 503, statusMessage: 'Supabase publishable key is not configured.' })
+  return { url, key }
+}
+
+export async function dbAsUser<T>(
+  event: H3Event,
+  accessToken: string,
+  table: string,
+  options: { method?: 'GET' | 'POST' | 'PATCH' | 'DELETE'; query?: Record<string, string>; body?: unknown; prefer?: string } = {},
+): Promise<T> {
+  const { url, key } = supabaseAuthConfig(event)
+  const query = new URLSearchParams(options.query ?? {}).toString()
+  const endpoint = url + '/rest/v1/' + table + (query ? '?' + query : '')
+  return await $fetch<T>(endpoint, {
+    method: options.method ?? 'GET',
+    headers: {
+      apikey: key,
+      Authorization: 'Bearer ' + accessToken,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      ...(options.prefer ? { Prefer: options.prefer } : {}),
+    },
+    ...(options.body !== undefined ? { body: options.body } : {}),
+    retry: 0,
+    timeout: 15000,
+  })
+}
+
 export async function db<T>(
   event: H3Event,
   table: string,
