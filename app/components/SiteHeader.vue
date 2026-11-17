@@ -11,6 +11,16 @@ const { data: catalog } = await useFetch<{
 
 const categories = computed(() => catalog.value?.categories ?? [])
 
+// Keep the desktop Products dropdown complete even if the categories API is unavailable.
+const productMenuCategories = [
+  { id: 'coolant-temperature-sensor', label: 'Coolant Temperature Sensor' },
+  { id: 'temperature-control-switch', label: 'Temperature Control Switch' },
+  { id: 'reverse-light-switch', label: 'Reverse Light Switch' },
+  { id: 'solenoid-valve', label: 'Solenoid Valve' },
+  { id: 'oil-pressure-alarm', label: 'Oil Pressure Alarm' },
+  { id: 'tire-pressure-sensor', label: 'Tire Pressure Sensor' },
+]
+
 const mobileOpen = ref(false)
 const productsOpen = ref(false)
 const dropdown = ref<HTMLElement | null>(null)
@@ -74,7 +84,7 @@ const accountUrl = computed(() => config.public.storeDomain ? `https://${config.
               <AppIcon name="arrow-right" :size="14" />
             </NuxtLink>
             <NuxtLink
-              v-for="category in categories"
+              v-for="category in productMenuCategories"
               :key="category.id"
               :to="`/products?category=${category.id}`"
               class="site-dropdown__link"
