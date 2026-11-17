@@ -91,7 +91,16 @@ export async function sendAdminMagicLink(event: H3Event) {
     })
     return { success: true }
   } catch (error: any) {
-    throw createError({ statusCode: 502, statusMessage: error?.data?.msg || error?.data?.message || 'Could not send the sign-in email. Check Supabase Auth email settings.' })
+    const data = error?.data ?? error?.response?._data ?? {}
+    const detail = data.msg || data.message || data.error_description || data.error || data.code || error?.statusMessage || error?.message
+    const status = error?.statusCode || error?.status || data.status
+    const safeDetail = typeof detail === 'string' ? detail.slice(0, 240) : ''
+    throw createError({
+      statusCode: 502,
+      statusMessage: safeDetail
+        ? `Supabase Auth error${status ? ` (${status})` : ''}: ${safeDetail}`
+        : `Could not send sign-in email${status ? ` (HTTP ${status})` : ''}. Check Supabase Auth email/SMTP settings.`,
+    })
   }
 }
 
