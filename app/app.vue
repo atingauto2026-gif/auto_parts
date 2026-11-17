@@ -5,6 +5,26 @@ const { scheme, sync } = useTheme()
 
 onMounted(sync)
 
+onMounted(async () => {
+  const hash = window.location.hash
+  if (!hash.includes('access_token=') || !hash.includes('refresh_token=')) return
+  const params = new URLSearchParams(hash.replace(/^#/, ''))
+  const access_token = params.get('access_token') || ''
+  const refresh_token = params.get('refresh_token') || ''
+  const expires_in = Number(params.get('expires_in') || 3600)
+  window.history.replaceState(null, '', window.location.pathname + window.location.search)
+  try {
+    await $fetch('/api/admin/auth/session', {
+      method: 'POST',
+      body: { access_token, refresh_token, expires_in },
+    })
+    await navigateTo('/admin/import')
+  } catch {
+    await navigateTo('/admin/login?error=link-invalid')
+  }
+})
+
+
 const antdTheme = computed(() => {
   const dark = scheme.value === 'dark'
   const primary = dark ? '#e58a4c' : '#d97732'
