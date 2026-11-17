@@ -7,20 +7,20 @@
 :root {
   color-scheme: light;
 
-  --v-bg: #f5f4f0;
-  --v-bg-soft: #eceae5;
+  --v-bg: #f1f3f4;
+  --v-bg-soft: #e7ebed;
   --v-surface: #ffffff;
-  --v-ink: #171a1c;
-  --v-ink-soft: #73797a;
+  --v-ink: #17212a;
+  --v-ink-soft: #66737d;
   --v-ink-faint: rgba(23, 26, 28, 0.45);
-  --v-line: rgba(23, 26, 28, 0.1);
-  --v-line-strong: rgba(23, 26, 28, 0.18);
+  --v-line: rgba(23, 33, 42, 0.12);
+  --v-line-strong: rgba(23, 33, 42, 0.2);
 
-  --v-green: #e85d2a;
-  --v-green-hover: #c9481b;
-  --v-green-deep: #aa3915;
-  --v-orange: #e85d2a;
-  --v-accent: #ff9a70;
+  --v-green: #d97732;
+  --v-green-hover: #b85d25;
+  --v-green-deep: #8f461d;
+  --v-orange: #d97732;
+  --v-accent: #e79a63;
   --v-on-green: #ffffff;
 
   --v-shadow: 0 18px 50px rgba(23, 26, 28, 0.1);
@@ -28,8 +28,8 @@
 
   /* Landing surfaces */
   --v-card: #ffffff;
-  --v-tile: #efeeea;
-  --v-tile-img: #e7e5df;
+  --v-tile: #e9edef;
+  --v-tile-img: #e0e5e8;
   --v-pattern: rgba(23, 26, 28, 0.035);
   --v-pattern-2: rgba(23, 26, 28, 0.022);
   --v-glow-1: rgba(232, 93, 42, 0.09);
@@ -52,35 +52,35 @@
 
   --v-nav-h: 56px;
   --v-max: 1200px;
-  --v-radius: 22px;
-  --v-radius-lg: 28px;
+  --v-radius: 8px;
+  --v-radius-lg: 12px;
 }
 
 [data-theme='dark'] {
   color-scheme: dark;
 
-  --v-bg: #101315;
-  --v-bg-soft: #171b1d;
-  --v-surface: #1b2022;
-  --v-ink: #f3f2ef;
-  --v-ink-soft: #aeb4b4;
+  --v-bg: #10171c;
+  --v-bg-soft: #182127;
+  --v-surface: #1c272e;
+  --v-ink: #f0f3f4;
+  --v-ink-soft: #aab6bd;
   --v-ink-faint: rgba(243, 242, 239, 0.45);
   --v-line: rgba(255, 255, 255, 0.12);
   --v-line-strong: rgba(255, 255, 255, 0.22);
 
-  --v-green: #ff8153;
-  --v-green-hover: #ff9a70;
-  --v-green-deep: #26150f;
-  --v-orange: #ff8153;
-  --v-accent: #ff9a70;
+  --v-green: #e58a4c;
+  --v-green-hover: #f0a36c;
+  --v-green-deep: #291b13;
+  --v-orange: #e58a4c;
+  --v-accent: #f0a36c;
   --v-on-green: #171a1c;
 
   --v-shadow: 0 22px 70px rgba(0, 0, 0, 0.45);
   --v-shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.35);
 
-  --v-card: #1b2022;
-  --v-tile: #171b1d;
-  --v-tile-img: #101315;
+  --v-card: #1c272e;
+  --v-tile: #182127;
+  --v-tile-img: #10171c;
   --v-pattern: rgba(255, 255, 255, 0.025);
   --v-pattern-2: rgba(255, 255, 255, 0.018);
   --v-glow-1: rgba(255, 129, 83, 0.12);
