@@ -2,7 +2,6 @@
 import type { CatalogCategory } from '#shared/types'
 
 const route = useRoute()
-const { count, openDrawer } = useCart()
 const config = useRuntimeConfig()
 
 const { data: catalog } = await useFetch<{
@@ -102,11 +101,6 @@ const accountUrl = computed(() => config.public.storeDomain ? `https://${config.
 
       <div class="site-header__actions">
         <ThemeToggle />
-
-        <button type="button" class="site-icon-btn" aria-label="Open cart" style="position: relative" @click="openDrawer">
-          <AppIcon name="cart" :size="16" />
-          <span v-if="count > 0" class="site-cart-count">{{ count }}</span>
-        </button>
 
         <button
           type="button"
