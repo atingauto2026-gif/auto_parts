@@ -4,6 +4,7 @@ import { getCookie, setCookie, deleteCookie, getRequestURL, createError } from '
 const ADMIN_EMAIL = 'atingauto2026@gmail.com'
 const ACCESS_COOKIE = 'rr_admin_access'
 const REFRESH_COOKIE = 'rr_admin_refresh'
+const PASSWORD_COOKIE = 'rr_admin_password'
 
 function envValue(event: H3Event, names: string[], configKey: string) {
   const env = (event.context as any).cloudflare?.env ?? {}
@@ -23,6 +24,39 @@ export function authConfig(event: H3Event) {
   return { url, key }
 }
 
+function safeEqual(a: string, b: string) {
+  const left = new TextEncoder().encode(a)
+  const right = new TextEncoder().encode(b)
+  if (left.length !== right.length) return false
+  let diff = 0
+  for (let i = 0; i < left.length; i++) diff |= left[i] ^ right[i]
+  return diff === 0
+}
+
+function base64Url(bytes: Uint8Array) {
+  let binary = ''
+  for (const byte of bytes) binary += String.fromCharCode(byte)
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
+
+async function hmacSign(secret: string, data: string) {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'])
+  const signature = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data))
+  return base64Url(new Uint8Array(signature))
+}
+
+async function hasPasswordSession(event: H3Event) {
+  const raw = getCookie(event, PASSWORD_COOKIE) || ''
+  if (!raw) return false
+  const secret = envValue(event, ['ADMIN_PASSWORD'], 'adminPassword')
+  if (!secret) return false
+  const parts = raw.split('.')
+  if (parts.length !== 3 || parts[0] !== 'v1') return false
+  const expires = Number(parts[1])
+  if (!Number.isFinite(expires) || expires < Date.now()) return false
+  return safeEqual(await hmacSign(secret, `v1.${expires}`), parts[2])
+}
+
 function setSessionCookies(event: H3Event, session: { access_token: string; refresh_token: string; expires_in?: number }) {
   const secure = getRequestURL(event).protocol === 'https:'
   const common = { httpOnly: true, secure, sameSite: 'lax' as const, path: '/', maxAge: 60 * 60 * 24 * 30 }
@@ -39,9 +73,13 @@ async function fetchAuthUser(url: string, key: string, accessToken: string) {
 }
 
 export async function requireAdmin(event: H3Event) {
+  if (await hasPasswordSession(event)) {
+    return { user: { id: 'admin', email: ADMIN_EMAIL, email_confirmed_at: 'password' }, accessToken: '' }
+  }
   const { url, key } = authConfig(event)
   let accessToken = getCookie(event, ACCESS_COOKIE) || ''
   const refreshToken = getCookie(event, REFRESH_COOKIE) || ''
+
   if (!accessToken && !refreshToken) throw createError({ statusCode: 401, statusMessage: 'Please sign in.' })
 
   let user: Awaited<ReturnType<typeof fetchAuthUser>> | null = null
@@ -70,6 +108,26 @@ export async function requireAdmin(event: H3Event) {
   return { user, accessToken }
 }
 
+export async function signInWithPassword(event: H3Event) {
+  const expectedUser = envValue(event, ['ADMIN_USERNAME'], 'adminUsername') || 'admin'
+  const expectedPassword = envValue(event, ['ADMIN_PASSWORD'], 'adminPassword')
+  if (!expectedPassword) {
+    throw createError({ statusCode: 503, statusMessage: '管理员密码未配置：请设置环境变量 ADMIN_PASSWORD。' })
+  }
+  const body = await readBody<{ username?: string; password?: string }>(event)
+  const userOk = safeEqual((body?.username || '').trim(), expectedUser)
+  const passwordOk = safeEqual(body?.password || '', expectedPassword)
+  if (!userOk || !passwordOk) {
+    throw createError({ statusCode: 401, statusMessage: '用户名或密码错误。' })
+  }
+  const maxAge = 60 * 60 * 12
+  const payload = `v1.${Date.now() + maxAge * 1000}`
+  const token = `${payload}.${await hmacSign(expectedPassword, payload)}`
+  const secure = getRequestURL(event).protocol === 'https:'
+  setCookie(event, PASSWORD_COOKIE, token, { httpOnly: true, secure, sameSite: 'lax', path: '/', maxAge })
+  return { success: true, username: expectedUser }
+}
+
 export async function sendAdminMagicLink(event: H3Event) {
   const body = await readBody<{ email?: string }>(event)
   if (body?.email?.trim().toLowerCase() !== ADMIN_EMAIL) {
@@ -95,13 +153,13 @@ export async function sendAdminMagicLink(event: H3Event) {
     const data = error?.data ?? response?._data ?? {}
     const detail = data.msg || data.message || data.error_description || data.error || data.code || error?.statusMessage || error?.message
     const status = response?.status || error?.statusCode || error?.status || data.status
-    const safeDetail = typeof detail === 'string' ? detail.replace(/[\\r\\n]+/g, ' ').slice(0, 180) : ''
+    const safeDetail = typeof detail === 'string' ? detail.replace(/[\r\n]+/g, ' ').slice(0, 180) : ''
     const responseUrl = typeof response?.url === 'string'
       ? response.url.replace(/[?#].*$/, '')
       : ''
     const header = (name: string) => {
       const value = response?.headers?.get?.(name)
-      return typeof value === 'string' ? value.replace(/[\\r\\n]+/g, ' ').slice(0, 100) : ''
+      return typeof value === 'string' ? value.replace(/[\r\n]+/g, ' ').slice(0, 100) : ''
     }
     const diagnostics = [
       'method=POST',
@@ -151,4 +209,5 @@ export async function acceptAdminSession(event: H3Event) {
 export function clearAdminSession(event: H3Event) {
   deleteCookie(event, ACCESS_COOKIE, { path: '/' })
   deleteCookie(event, REFRESH_COOKIE, { path: '/' })
+  deleteCookie(event, PASSWORD_COOKIE, { path: '/' })
 }

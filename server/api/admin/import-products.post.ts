@@ -1,4 +1,4 @@
-import { dbAsUser } from '../../utils/supabase'
+import { db, dbAsUser, supabaseConfig } from '../../utils/supabase'
 import { authConfig, requireAdmin } from '../../utils/admin-auth'
 
 type CsvRow = Record<string, string>
@@ -57,7 +57,7 @@ function parseImages(value: string): string[] {
   }
 }
 
-async function storeImage(sourceUrl: string, factoryNo: string, index: number, baseUrl: string, publishableKey: string, accessToken: string) {
+async function storeImage(sourceUrl: string, factoryNo: string, index: number, baseUrl: string, publishableKey: string, storageToken: string) {
   const parsed = new URL(sourceUrl)
   if (parsed.protocol !== 'https:' || parsed.hostname !== 'hd.muhz.net') throw new Error('Image URL host is not allowed')
   const response = await fetch(sourceUrl, { headers: { 'User-Agent': 'RoadReadyCatalogImporter/1.0' } })
@@ -70,7 +70,7 @@ async function storeImage(sourceUrl: string, factoryNo: string, index: number, b
   const objectPath = `${safeName(factoryNo)}/${index + 1}-${safeName(parsed.pathname.split('/').pop() || 'photo') }.${ext}`
   const upload = await fetch(`${baseUrl}/storage/v1/object/product-images/${objectPath}`, {
     method: 'POST',
-    headers: { apikey: publishableKey, Authorization: `Bearer ${accessToken}`, 'Content-Type': mime, 'x-upsert': 'true' },
+    headers: { apikey: publishableKey, Authorization: `Bearer ${storageToken}`, 'Content-Type': mime, 'x-upsert': 'true' },
     body: bytes,
   })
   if (!upload.ok) throw new Error(`Storage upload failed: ${(await upload.text()).slice(0, 160)}`)
@@ -80,6 +80,9 @@ async function storeImage(sourceUrl: string, factoryNo: string, index: number, b
 export default defineEventHandler(async (event) => {
   const { accessToken } = await requireAdmin(event)
   const { url: baseUrl, key: publishableKey } = authConfig(event)
+  const storageToken = accessToken || supabaseConfig(event).key
+  const writeProducts = <T>(table: string, options: { method?: 'GET' | 'POST' | 'PATCH' | 'DELETE'; query?: Record<string, string>; body?: unknown; prefer?: string } = {}) =>
+    accessToken ? dbAsUser<T>(event, accessToken, table, options) : db<T>(event, table, options)
 
   const body = await readBody<{ csv?: string }>(event)
   if (!body?.csv || body.csv.length > 5_000_000) throw createError({ statusCode: 400, statusMessage: 'Please upload a CSV file under 5 MB.' })
@@ -117,7 +120,7 @@ export default defineEventHandler(async (event) => {
     const warnings: string[] = []
     for (const [index, imageUrl] of imageUrls.slice(0, 12).entries()) {
       try {
-        const stored = await storeImage(imageUrl, factoryNo, index, baseUrl, publishableKey, accessToken)
+        const stored = await storeImage(imageUrl, factoryNo, index, baseUrl, publishableKey, storageToken)
         images.push(stored)
         imageCount++
       } catch (error) {
@@ -143,7 +146,7 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-      const existing = await dbAsUser<Array<{ id: string; handle: string }>>(event, accessToken, 'products', {
+      const existing = await writeProducts<Array<{ id: string; handle: string }>>('products', {
         query: { select: 'id,handle', factory_no: `eq.${factoryNo}`, oem: `eq.${oem}`, limit: '3' },
       })
       if (existing.length > 1) {
@@ -151,12 +154,12 @@ export default defineEventHandler(async (event) => {
         continue
       }
       if (existing.length === 1) {
-        await dbAsUser(event, accessToken, 'products', { method: 'PATCH', query: { id: `eq.${existing[0].id}` }, body: payload, prefer: 'return=minimal' })
+        await writeProducts('products', { method: 'PATCH', query: { id: `eq.${existing[0].id}` }, body: payload, prefer: 'return=minimal' })
         updated++
         report.push({ factoryNo, status: 'updated', message: warnings.join(' ') || `Updated; ${images.length} images stored.` })
       } else {
         const handle = `part-${safeName(factoryNo).toLowerCase()}-${safeName(row.id || String(created + updated + 1)).toLowerCase()}`
-        await dbAsUser(event, accessToken, 'products', { method: 'POST', body: { ...payload, handle }, prefer: 'return=minimal' })
+        await writeProducts('products', { method: 'POST', body: { ...payload, handle }, prefer: 'return=minimal' })
         created++
         report.push({ factoryNo, status: 'created', message: warnings.join(' ') || `Created; ${images.length} images stored.` })
       }
