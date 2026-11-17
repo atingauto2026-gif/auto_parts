@@ -30,10 +30,6 @@ All tables have RLS enabled and no public/anon/authenticated table grants or pol
 - `GET /api/products`
 - `GET /api/products/:handle`
 - `GET /api/categories`
-- `GET /api/cart`
-- `POST /api/cart/lines`
-- `PATCH /api/cart/lines`
-- `DELETE /api/cart/lines?lineId=...`
 - `POST /api/contact`
 
 Legacy cart tables and API handlers remain in the database/codebase for backwards compatibility, but are not exposed in the storefront UI.
@@ -45,4 +41,4 @@ Legacy cart tables and API handlers remain in the database/codebase for backward
 3. Verify product/category pages, quote/contact submissions and responsive layouts on the deployed preview.
 4. Publish approved product records, images, fitment references and quote details.
 
-The Supabase database migration has already been applied to the linked project. Repository changes do not deploy Cloudflare automatically.
+The Supabase database migration has already been applied to the linked project. A push to `main` triggers the GitHub Actions Cloudflare Pages deployment workflow; preview branches do not deploy to production.
