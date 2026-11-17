@@ -1,4 +1,5 @@
-import { db, supabaseConfig } from '../../utils/supabase'
+import { dbAsUser } from '../../utils/supabase'
+import { authConfig, requireAdmin } from '../../utils/admin-auth'
 
 type CsvRow = Record<string, string>
 
@@ -56,19 +57,7 @@ function parseImages(value: string): string[] {
   }
 }
 
-async function ensureBucket(baseUrl: string, key: string) {
-  const response = await fetch(`${baseUrl}/storage/v1/bucket`, {
-    method: 'POST',
-    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id: 'product-images', name: 'product-images', public: true, file_size_limit: 10485760, allowed_mime_types: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'] }),
-  })
-  if (!response.ok && response.status !== 409) {
-    const message = await response.text()
-    if (!message.toLowerCase().includes('already exists')) throw new Error(`Storage bucket setup failed: ${message.slice(0, 180)}`)
-  }
-}
-
-async function storeImage(sourceUrl: string, factoryNo: string, index: number, baseUrl: string, key: string) {
+async function storeImage(sourceUrl: string, factoryNo: string, index: number, baseUrl: string, publishableKey: string, accessToken: string) {
   const parsed = new URL(sourceUrl)
   if (parsed.protocol !== 'https:' || parsed.hostname !== 'hd.muhz.net') throw new Error('Image URL host is not allowed')
   const response = await fetch(sourceUrl, { headers: { 'User-Agent': 'RoadReadyCatalogImporter/1.0' } })
@@ -81,7 +70,7 @@ async function storeImage(sourceUrl: string, factoryNo: string, index: number, b
   const objectPath = `${safeName(factoryNo)}/${index + 1}-${safeName(parsed.pathname.split('/').pop() || 'photo') }.${ext}`
   const upload = await fetch(`${baseUrl}/storage/v1/object/product-images/${objectPath}`, {
     method: 'POST',
-    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': mime, 'x-upsert': 'true' },
+    headers: { apikey: publishableKey, Authorization: `Bearer ${accessToken}`, 'Content-Type': mime, 'x-upsert': 'true' },
     body: bytes,
   })
   if (!upload.ok) throw new Error(`Storage upload failed: ${(await upload.text()).slice(0, 160)}`)
@@ -89,22 +78,13 @@ async function storeImage(sourceUrl: string, factoryNo: string, index: number, b
 }
 
 export default defineEventHandler(async (event) => {
-  const env = (event.context as any).cloudflare?.env ?? {}
-  const expectedToken = String(env.PRODUCT_IMPORT_TOKEN || process.env.PRODUCT_IMPORT_TOKEN || '')
-  const suppliedToken = getHeader(event, 'x-product-import-token') || ''
-  if (!expectedToken || suppliedToken.length !== expectedToken.length || suppliedToken !== expectedToken) {
-    throw createError({ statusCode: 401, statusMessage: 'Import access is not configured or the access code is incorrect.' })
-  }
+  const { accessToken } = await requireAdmin(event)
+  const { url: baseUrl, key: publishableKey } = authConfig(event)
 
   const body = await readBody<{ csv?: string }>(event)
   if (!body?.csv || body.csv.length > 5_000_000) throw createError({ statusCode: 400, statusMessage: 'Please upload a CSV file under 5 MB.' })
   const rows = parseCsv(body.csv)
   if (!rows.length) throw createError({ statusCode: 400, statusMessage: 'No product rows were found in this CSV.' })
-
-  const { url: baseUrl, key } = supabaseConfig(event)
-  try { await ensureBucket(baseUrl, key) } catch (error) {
-    throw createError({ statusCode: 502, statusMessage: error instanceof Error ? error.message : 'Could not prepare image storage.' })
-  }
 
   const report: Array<{ factoryNo: string; status: string; message: string }> = []
   const seen = new Set<string>()
@@ -137,7 +117,7 @@ export default defineEventHandler(async (event) => {
     const warnings: string[] = []
     for (const [index, imageUrl] of imageUrls.slice(0, 12).entries()) {
       try {
-        const stored = await storeImage(imageUrl, factoryNo, index, baseUrl, key)
+        const stored = await storeImage(imageUrl, factoryNo, index, baseUrl, publishableKey, accessToken)
         images.push(stored)
         imageCount++
       } catch (error) {
@@ -163,7 +143,7 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-      const existing = await db<Array<{ id: string; handle: string }>>(event, 'products', {
+      const existing = await dbAsUser<Array<{ id: string; handle: string }>>(event, accessToken, 'products', {
         query: { select: 'id,handle', factory_no: `eq.${factoryNo}`, oem: `eq.${oem}`, limit: '3' },
       })
       if (existing.length > 1) {
@@ -171,12 +151,12 @@ export default defineEventHandler(async (event) => {
         continue
       }
       if (existing.length === 1) {
-        await db(event, 'products', { method: 'PATCH', query: { id: `eq.${existing[0].id}` }, body: payload, prefer: 'return=minimal' })
+        await dbAsUser(event, accessToken, 'products', { method: 'PATCH', query: { id: `eq.${existing[0].id}` }, body: payload, prefer: 'return=minimal' })
         updated++
         report.push({ factoryNo, status: 'updated', message: warnings.join(' ') || `Updated; ${images.length} images stored.` })
       } else {
         const handle = `part-${safeName(factoryNo).toLowerCase()}-${safeName(row.id || String(created + updated + 1)).toLowerCase()}`
-        await db(event, 'products', { method: 'POST', body: { ...payload, handle }, prefer: 'return=minimal' })
+        await dbAsUser(event, accessToken, 'products', { method: 'POST', body: { ...payload, handle }, prefer: 'return=minimal' })
         created++
         report.push({ factoryNo, status: 'created', message: warnings.join(' ') || `Created; ${images.length} images stored.` })
       }
