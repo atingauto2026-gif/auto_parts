@@ -7,7 +7,6 @@ definePageMeta({
 
 const route = useRoute()
 const config = useRuntimeConfig()
-const { add, pending, checkoutEnabled } = useCart()
 
 const { data, error } = await useFetch<{
   source: 'supabase'
@@ -49,89 +48,24 @@ const safety = computed(() => landing.value.safety)
 
 const variants = computed(() => product.value.variants)
 const variantOptions = computed(() => variants.value.map((item) => ({
-  label: `${item.title}${item.availableForSale ? '' : ' — sold out'}`,
+  label: `${item.title}${item.availableForSale ? '' : ' — unavailable'}`,
   value: item.id,
   disabled: !item.availableForSale,
 })))
 const selectedId = ref(variants.value[0]?.id ?? '')
-const quantity = ref(1)
-const added = ref(false)
-const cartError = ref('')
-
 const variant = computed(
   () => variants.value.find((item) => item.id === selectedId.value) ?? variants.value[0] ?? null,
 )
-
-const priceMoney = computed(
-  () => variant.value?.price ?? product.value.priceRange?.minVariantPrice ?? null,
-)
-
-const price = computed(() => (priceMoney.value ? formatMoney(priceMoney.value) : null))
-
-const compareAt = computed(() => {
-  const value = variant.value?.compareAtPrice ?? product.value.compareAtPrice
-  if (!value || !priceMoney.value) return null
-  return Number(value.amount) > Number(priceMoney.value.amount) ? formatMoney(value) : null
-})
-
 const inStock = computed(() => variant.value?.availableForSale ?? product.value.availableForSale)
 
-/** Variants with a stored price can be added to the persistent cart. */
-const purchasable = computed(() => Boolean(variant.value?.price))
-
 const whatsappHref = computed(() => {
-  const message = `Hello! I'm interested in the ${landing.value.code} ${landing.value.name}. Could you send me pricing and lead time?`
+  const message = `Hello! I'm interested in the ${landing.value.code} ${landing.value.name}. Could you send me pricing, MOQ and lead time?`
   return `https://wa.me/${config.public.whatsapp}?text=${encodeURIComponent(message)}`
 })
-
-async function addToCart() {
-  if (!variant.value?.price) return
-  const variantPrice = variant.value.price
-  cartError.value = ''
-  try {
-    await add(variant.value.id, quantity.value)
-    added.value = true
-    trackEvent('add_to_cart', {
-      currency: variantPrice.currencyCode,
-      value: Number(variantPrice.amount) * quantity.value,
-      items: [
-        {
-          item_id: product.value.handle,
-          item_name: pageTitle.value,
-          item_variant: variant.value.title,
-          price: Number(variantPrice.amount),
-          quantity: quantity.value,
-        },
-      ],
-    })
-    window.setTimeout(() => {
-      added.value = false
-    }, 2600)
-  } catch (cause) {
-    cartError.value = errorMessage(cause)
-  }
-}
 
 function trackWhatsApp() {
   trackEvent('contact', { method: 'whatsapp', product: landing.value.code })
 }
-
-/* GA4 ecommerce: view_item fires once the product data is on the client. */
-onMounted(() => {
-  const money = product.value.priceRange?.minVariantPrice
-  if (!money) return
-  trackEvent('view_item', {
-    currency: money.currencyCode,
-    value: Number(money.amount),
-    items: [
-      {
-        item_id: product.value.handle,
-        item_name: pageTitle.value,
-        price: Number(money.amount),
-      },
-    ],
-  })
-})
 
 /* ------------------------------------------------------------------ seo */
 
@@ -168,18 +102,6 @@ const productLd = computed(() => ({
   sku: landing.value.code,
   category: landing.value.categoryLabel,
   brand: { '@type': 'Brand', name: 'RoadReady Auto' },
-  offers: product.value.priceRange
-    ? {
-        '@type': 'Offer',
-        url: `${config.public.siteUrl}/products/${product.value.handle}`,
-        priceCurrency: product.value.priceRange.minVariantPrice.currencyCode,
-        price: product.value.priceRange.minVariantPrice.amount,
-        availability: product.value.availableForSale
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-        seller: { '@type': 'Organization', name: 'RoadReady Auto' },
-      }
-    : undefined,
 }))
 
 const breadcrumbLd = computed(() => ({
@@ -303,9 +225,8 @@ if (faqLd.value) {
             <p class="dl-eyebrow" style="margin-bottom: 0">Order</p>
 
             <div class="dl-buy__price">
-              <strong>{{ price ?? 'Request a quote' }}</strong>
-              <s v-if="compareAt">{{ compareAt }}</s>
-              <a-tag v-if="price" :color="inStock ? 'success' : 'default'" class="dl-stock-tag">{{ inStock ? 'In stock' : 'Out of stock' }}</a-tag>
+              <strong>Wholesale pricing on request</strong>
+              <span class="dl-stock-tag">Availability confirmed by enquiry</span>
             </div>
 
             <div v-if="variants.length > 1" class="dl-form">
@@ -320,38 +241,9 @@ if (faqLd.value) {
             </div>
 
             <div class="dl-buy__row">
-              <div class="dl-form">
-                <label>
-                  Quantity
-                  <QuantityStepper v-model="quantity" :min="1" :max="20" />
-                </label>
-              </div>
-
-              <a-button
-                type="primary"
-                size="large"
-                block
-                class="dl-ant-buy"
-                :loading="pending"
-                :disabled="!inStock || !purchasable"
-                @click="addToCart"
-              >
-                <template v-if="added">Added to cart</template>
-                <template v-else-if="!purchasable">Request a quote</template>
-                <template v-else-if="!inStock">Out of stock</template>
-                <template v-else>Add to cart — {{ price }}</template>
-              </a-button>
+              <NuxtLink to="#quote" class="dl-cta">Request a quote</NuxtLink>
+              <span class="dl-buy__availability">{{ inStock ? 'Ask us to confirm stock' : 'Check availability' }}</span>
             </div>
-
-            <a-alert v-if="cartError" class="dl-commerce-alert" type="error" show-icon :message="cartError" />
-            <a-alert
-              v-if="!checkoutEnabled"
-              class="dl-commerce-alert"
-              type="info"
-              show-icon
-              message="Checkout not yet available"
-              description="Your product catalogue and cart are powered by Supabase. Online checkout will be enabled after a payment provider is connected."
-            />
           </div>
 
           <aside class="dl-buy__aside">
