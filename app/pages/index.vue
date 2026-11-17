@@ -32,7 +32,7 @@ useSeoMeta({
     'Explore automotive sensors, switches, solenoid valves and pressure monitoring components. Request wholesale pricing and fitment support.',
   ogTitle: 'RoadReady Auto | Automotive components',
   ogDescription:
-    'Thoughtful upgrades, dependable essentials and a better way to shop auto parts.',
+    'Specialist automotive sensors, switches and control components. Enquire for wholesale pricing and fitment support.',
   ogType: 'website',
   ogImage: 'https://di-uploads-pod47.dealerinspire.com/beamantoyota1/uploads/2025/05/2025_Toyota_RAV4_blue_SUV_exterior.png',
 })
@@ -45,9 +45,9 @@ useHead({
 <template>
   <div class="store-home">
     <div class="home-announcement">
-      <span>Built for the road ahead</span>
+      <span>Automotive components for global applications</span>
       <span class="home-announcement__dot">·</span>
-      <span>Find the right part for your next drive</span>
+      <span>OE references · Technical support · Wholesale enquiries</span>
     </div>
 
     <section class="home-hero">
@@ -59,7 +59,7 @@ useHead({
       >
       <div class="home-hero__shade"></div>
       <div class="home-container home-hero__content">
-        <p class="home-kicker"><span></span>Parts for every road</p>
+        <p class="home-kicker"><span></span>Precision automotive components</p>
         <h1>Precision<br><em>in motion.</em></h1>
         <p class="home-hero__text">
           Sensors, switches and control components built for dependable vehicle performance. Find the right part with support from our team.
@@ -73,7 +73,7 @@ useHead({
             placeholder="Search by product name, OE number or part number"
           >
           <button type="submit" aria-label="Search">
-            <span>Find parts</span>
+            <span>Search catalogue</span>
             <AppIcon name="arrow-right" :size="17" />
           </button>
         </form>
@@ -82,7 +82,7 @@ useHead({
           <span>Popular: Coolant sensors · Solenoid valves · TPMS</span>
         </div>
       </div>
-      <div class="home-hero__index">01 / DRIVE BETTER</div>
+      <div class="home-hero__index">01 / ENGINEERED FOR PERFORMANCE</div>
     </section>
 
     <section class="home-assurance" aria-label="Why shop with us">
@@ -100,7 +100,7 @@ useHead({
             <p class="home-kicker home-kicker--dark"><span></span>Our product range</p>
             <h2>Explore product categories</h2>
           </div>
-          <NuxtLink to="/products" class="home-text-link">Explore all parts <AppIcon name="arrow-right" :size="15" /></NuxtLink>
+          <NuxtLink to="/products" class="home-text-link">Browse categories <AppIcon name="arrow-right" :size="15" /></NuxtLink>
         </div>
         <div class="home-category-grid">
           <NuxtLink
@@ -125,7 +125,7 @@ useHead({
             <p class="home-kicker home-kicker--dark"><span></span>RoadReady catalogue</p>
             <h2>Featured components</h2>
           </div>
-          <NuxtLink to="/products" class="home-text-link">View the collection <AppIcon name="arrow-right" :size="15" /></NuxtLink>
+          <NuxtLink to="/products" class="home-text-link">Browse catalogue <AppIcon name="arrow-right" :size="15" /></NuxtLink>
         </div>
         <div v-if="featured.length" class="p-grid home-product-grid">
           <ProductCard v-for="product in featured" :key="product.id" :product="product" />
