@@ -2,8 +2,8 @@
 type PreviewRow = { factoryNo: string; oem: string; carModel: string; imageCount: number; category: string }
 
 useSeoMeta({ title: 'Product Import' })
+definePageMeta({ middleware: 'admin-auth' })
 
-const token = ref('')
 const csvText = ref('')
 const fileName = ref('')
 const importing = ref(false)
@@ -69,15 +69,19 @@ async function onFileChange(event: Event) {
   csvText.value = await file.text()
 }
 
+async function logout() {
+  await $fetch('/api/admin/auth/logout', { method: 'POST' }).catch(() => {})
+  await navigateTo('/admin/login')
+}
+
 async function runImport() {
-  if (!token.value.trim() || !csvText.value || importing.value) return
+  if (!csvText.value || importing.value) return
   importing.value = true
   result.value = null
   errorMessage.value = ''
   try {
     result.value = await $fetch('/api/admin/import-products', {
       method: 'POST',
-      headers: { 'x-product-import-token': token.value },
       body: { csv: csvText.value },
     })
   } catch (error: any) {
@@ -92,15 +96,9 @@ async function runImport() {
   <main class="import-page">
     <div class="import-shell">
       <NuxtLink to="/" class="back-link">← RoadReady Auto</NuxtLink>
-      <p class="eyebrow">CATALOG MANAGEMENT</p>
+      <div class="admin-top"><p class="eyebrow">CATALOG MANAGEMENT</p><button class="logout-button" @click="logout">退出登录</button></div>
       <h1>批量导入产品</h1>
       <p class="intro">上传产品 CSV，系统会按厂号识别六个产品分类，并根据 OE 数据表中的图片链接自动保存图片。导入前先检查预览。</p>
-
-      <section class="panel">
-        <label for="import-token">后台导入密钥</label>
-        <input id="import-token" v-model="token" type="password" autocomplete="off" placeholder="输入 Cloudflare 中设置的 PRODUCT_IMPORT_TOKEN">
-        <p class="hint">密钥只用于本次导入请求，不会保存到浏览器。</p>
-      </section>
 
       <section class="panel">
         <label for="csv-file">第一步：选择产品 CSV</label>
@@ -131,7 +129,7 @@ async function runImport() {
           </table>
         </div>
         <p v-if="preview.length > 30" class="hint">这里只显示前 30 条，其余记录也会一并检查和导入。</p>
-        <button class="import-button" :disabled="!token.trim() || importing" @click="runImport">
+        <button class="import-button" :disabled="importing" @click="runImport">
           {{ importing ? '正在导入产品和图片…' : '确认并开始导入' }}
         </button>
       </section>
@@ -170,7 +168,7 @@ async function runImport() {
 
 <style scoped>
 .import-page{min-height:100vh;background:#f3f4f5;color:#20262d;padding:48px 20px 80px;font-family:Arial,sans-serif}
-.import-shell{max-width:980px;margin:0 auto}.back-link{color:#68727c;text-decoration:none;font-size:13px}.eyebrow{margin:34px 0 8px;color:#d66b2d;font-size:11px;font-weight:700;letter-spacing:.16em}
+.import-shell{max-width:980px;margin:0 auto}.admin-top{display:flex;justify-content:space-between;align-items:center}.logout-button{border:1px solid #d5dade;background:#fff;color:#53606a;border-radius:7px;padding:8px 12px;cursor:pointer;font-size:12px}.back-link{color:#68727c;text-decoration:none;font-size:13px}.eyebrow{margin:34px 0 8px;color:#d66b2d;font-size:11px;font-weight:700;letter-spacing:.16em}
 h1{font-size:34px;letter-spacing:-.04em;margin:0 0 12px}.intro{max-width:720px;color:#65707a;line-height:1.7;margin:0 0 28px}
 .panel{background:#fff;border:1px solid #e0e4e7;border-radius:12px;padding:22px;margin:16px 0}
 label{display:block;font-weight:700;font-size:14px;margin-bottom:10px}input[type=password]{width:100%;max-width:480px;padding:12px;border:1px solid #cfd5da;border-radius:7px;font-size:14px}
