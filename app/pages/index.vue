@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CatalogCategory, ShopProduct } from '#shared/types'
+import type { ShopProduct } from '#shared/types'
 
 const config = useRuntimeConfig()
 const router = useRouter()
@@ -10,13 +10,7 @@ const { data: catalog } = await useFetch<{
   products: ShopProduct[]
 }>('/api/products', { key: 'home-products' })
 
-const { data: categoryData } = await useFetch<{ categories: CatalogCategory[] }>(
-  '/api/categories',
-  { key: 'home-categories' },
-)
-
 const products = computed(() => catalog.value?.products ?? [])
-const categories = computed(() => categoryData.value?.categories ?? [])
 const featured = computed(() =>
   products.value.filter((product) => product.tags.includes('Best Seller')).slice(0, 4),
 )
@@ -124,28 +118,12 @@ useHead({
       </div>
     </section>
 
-    <section class="home-section home-categories">
-      <div class="home-container">
-        <div class="home-section__head">
-          <div>
-            <p class="home-kicker home-kicker--dark"><span></span>Our product range</p>
-            <h2>Explore product categories</h2>
-          </div>
-          <NuxtLink to="/products" class="home-text-link">Browse categories <AppIcon name="arrow-right" :size="15" /></NuxtLink>
-        </div>
-        <div class="home-category-grid">
-          <NuxtLink
-            v-for="(category, index) in categories"
-            :key="category.id"
-            :to="`/products?category=${category.id}`"
-            class="home-category"
-          >
-            <img :src="category.image" :alt="category.label" loading="lazy">
-            <span class="home-category__number">0{{ index + 1 }}</span>
-            <span class="home-category__label">{{ category.label }}</span>
-            <span class="home-category__arrow"><AppIcon name="arrow-right" :size="17" /></span>
-          </NuxtLink>
-        </div>
+    <section class="home-stats" aria-label="RoadReady company facts">
+      <div class="home-stats__grid">
+        <div class="home-stat"><AppIcon name="globe" :size="48" /><strong>80+</strong><span>Countries Served</span></div>
+        <div class="home-stat"><AppIcon name="flask-conical" :size="48" /><strong>25+</strong><span>Years Experience</span></div>
+        <div class="home-stat"><AppIcon name="shield-check" :size="48" /><strong>10+</strong><span>Patents</span></div>
+        <div class="home-stat"><AppIcon name="users-round" :size="48" /><strong>100+</strong><span>Team Members</span></div>
       </div>
     </section>
 
@@ -284,8 +262,14 @@ useHead({
 .home-assurance strong,.home-assurance small { display:block; }
 .home-assurance strong { font-size:12px; letter-spacing:.01em; }
 .home-assurance small { margin-top:3px; color:rgba(255,255,255,.58); font-size:11px; }
+.home-stats { background:#090b0d; color:#fff; }
+.home-stats__grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); max-width:1500px; margin:0 auto; }
+.home-stat { display:flex; min-height:300px; flex-direction:column; align-items:center; justify-content:center; border-right:1px solid rgba(255,255,255,.14); }
+.home-stat:last-child { border-right:0; }
+.home-stat :deep(svg) { margin-bottom:62px; color:#35c8f2; stroke-width:1.8; }
+.home-stat strong { color:#fff; font-family:var(--v-font-display); font-size:clamp(3.5rem,5vw,5.2rem); font-weight:800; line-height:1; letter-spacing:-.055em; }
+.home-stat span { margin-top:40px; color:#9a9da0; font-size:14px; font-weight:600; letter-spacing:.02em; }
 .home-section { padding:clamp(68px,8vw,108px) 0; }
-.home-categories { background:#f4f6f7; }
 .home-section__head { display:flex; align-items:end; justify-content:space-between; gap:24px; margin-bottom:32px; }
 .home-kicker--dark { color:var(--home-accent); }
 .home-section__head h2 { margin-top:12px; font-size:clamp(2.1rem,4vw,3.65rem); line-height:.98; letter-spacing:-.045em; text-transform:uppercase; }
@@ -353,6 +337,13 @@ useHead({
   .home-assurance__grid { grid-template-columns:1fr; padding-block:8px; }
   .home-assurance__grid>div,.home-assurance__grid>div:first-child { padding:14px 0; border-right:0; border-bottom:1px solid rgba(255,255,255,.12); }
   .home-assurance__grid>div:last-child { border-bottom:0; }
+  .home-stats__grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .home-stat { min-height:210px; border-bottom:1px solid rgba(255,255,255,.14); }
+  .home-stat:nth-child(2) { border-right:0; }
+  .home-stat:nth-child(3),.home-stat:nth-child(4) { border-bottom:0; }
+  .home-stat :deep(svg) { margin-bottom:25px; }
+  .home-stat strong { font-size:3.2rem; }
+  .home-stat span { margin-top:19px; font-size:11px; }
   .home-section__head { align-items:flex-start; flex-direction:column; gap:14px; }
   .home-section__head h2 { font-size:2.45rem; }
   .home-category-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
