@@ -67,7 +67,7 @@ function editProduct(product: AdminProduct) {
     description: product.description || '',
     vendor: product.vendor || 'RoadReady Auto',
     is_published: product.is_published,
-    images: [...(product.images || [])],
+    images: [...(product.images?.length ? product.images : product.featured_image ? [product.featured_image] : [])],
   })
   message.value = ''
   errorMessage.value = ''
