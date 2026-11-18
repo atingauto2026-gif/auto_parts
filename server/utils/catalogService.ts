@@ -12,10 +12,32 @@ function mapProduct(row:DbProduct):ShopProduct {
  return {id:gid('Product',row.id),handle:row.handle,title:row.title,description:row.description,descriptionHtml:row.description_html,productType:row.product_type,vendor:row.vendor,tags:row.tags??[],availableForSale:row.available_for_sale,featuredImage:row.featured_image,images:row.images??[],priceRange:variants.length?{minVariantPrice:money(Math.min(...prices),currency),maxVariantPrice:money(Math.max(...prices),currency)}:null,compareAtPrice:variants.map(v=>v.compareAtPrice).find(Boolean)??null,variants}
 }
 function landingFromProduct(product:ShopProduct,stored:LandingContent|null):LandingContent {
- if(stored)return withDedicatedDefaults(stored,product.featuredImage?.url??'')
- const local=fallbackLanding(product.handle); if(local)return local
- const text=product.description.split(/(?<=[.!?])\\s+/).filter(Boolean)
- return withDedicatedDefaults({code:product.title.split(/[—–|-]/)[0]?.trim()??product.title,name:product.title.split(/[—–|-]/).slice(1).join(' ').trim()||product.productType,category:product.productType.toLowerCase().replace(/[^a-z0-9]+/g,'-'),categoryLabel:product.productType||'Product',tagline:text[0]??product.title,lead:text.slice(0,2).join(' '),badges:product.tags.slice(0,6),stats:[],highlights:[],why:text.slice(1,7),features:[],metric:null,dataRows:[],gallery:[],safety:[],compare:null,scenarios:[],specs:[],kit:[],video:null,heroImage:product.featuredImage?.url??null,galleryImages:product.images.map(i=>i.url)},product.featuredImage?.url??'')
+ const hero = product.featuredImage?.url ?? ''
+ const base = stored
+  ? withDedicatedDefaults(stored, hero)
+  : fallbackLanding(product.handle) ?? withDedicatedDefaults({
+    code: product.title.split(/[—–|-]/)[0]?.trim() ?? product.title,
+    name: product.title.split(/[—–|-]/).slice(1).join(' ').trim() || product.productType,
+    category: product.productType.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    categoryLabel: product.productType || 'Product',
+    tagline: product.description.split(/(?<=[.!?])\\s+/)[0] ?? product.title,
+    lead: product.description.split(/(?<=[.!?])\\s+/).slice(0, 2).join(' '),
+    badges: product.tags.slice(0, 6), stats: [], highlights: [], why: [], features: [],
+    metric: null, dataRows: [], gallery: [], safety: [], compare: null, scenarios: [],
+    specs: [], kit: [], video: null, heroImage: hero || null, galleryImages: [],
+  }, hero)
+ const extraImages = product.images.filter(image => image.url && image.url !== base.heroImage)
+ const gallery = [...(base.gallery ?? [])]
+ const known = new Set(gallery.map(item => item.image))
+ for (const image of extraImages) {
+  if (!known.has(image.url)) gallery.push({ image: image.url, title: image.altText || product.title, text: '' })
+ }
+ return {
+  ...base,
+  heroImage: base.heroImage || hero || null,
+  gallery,
+  galleryImages: [...new Set([...(base.galleryImages ?? []), ...product.images.map(image => image.url).filter(Boolean)])],
+ }
 }
 export async function listProducts(event:H3Event):Promise<{source:'supabase';products:ShopProduct[]}> {
  const rows=await db<DbProduct[]>(event,'products',{query:{select:'*,product_variants(*)',is_published:'eq.true',order:'sort_order.asc,title.asc'}})

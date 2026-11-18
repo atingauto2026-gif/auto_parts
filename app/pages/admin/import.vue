@@ -95,7 +95,7 @@ async function runImport() {
   <main class="import-page">
     <div class="import-shell">
       <NuxtLink to="/" class="back-link">← RoadReady Auto</NuxtLink>
-      <div class="admin-top"><p class="eyebrow">CATALOG MANAGEMENT</p><button class="logout-button" @click="logout">退出登录</button></div>
+      <div class="admin-top"><p class="eyebrow">CATALOG MANAGEMENT</p><div class="admin-actions"><NuxtLink to="/admin/products">单个产品管理</NuxtLink><button class="logout-button" @click="logout">退出登录</button></div></div>
       <h1>批量导入产品</h1>
       <p class="intro">上传产品 CSV，系统会按厂号识别六个产品分类，并根据 OE 数据表中的图片链接自动保存图片。导入前先检查预览。</p>
 
@@ -167,7 +167,7 @@ async function runImport() {
 
 <style scoped>
 .import-page{min-height:100vh;background:#f3f4f5;color:#20262d;padding:48px 20px 80px;font-family:Arial,sans-serif}
-.import-shell{max-width:980px;margin:0 auto}.admin-top{display:flex;justify-content:space-between;align-items:center}.logout-button{border:1px solid #d5dade;background:#fff;color:#53606a;border-radius:7px;padding:8px 12px;cursor:pointer;font-size:12px}.back-link{color:#68727c;text-decoration:none;font-size:13px}.eyebrow{margin:34px 0 8px;color:#d66b2d;font-size:11px;font-weight:700;letter-spacing:.16em}
+.import-shell{max-width:980px;margin:0 auto}.admin-top{display:flex;justify-content:space-between;align-items:center}.admin-actions{display:flex;align-items:center;gap:14px}.admin-actions a{color:#d66b2d;text-decoration:none;font-size:13px;font-weight:700}.logout-button{border:1px solid #d5dade;background:#fff;color:#53606a;border-radius:7px;padding:8px 12px;cursor:pointer;font-size:12px}.back-link{color:#68727c;text-decoration:none;font-size:13px}.eyebrow{margin:34px 0 8px;color:#d66b2d;font-size:11px;font-weight:700;letter-spacing:.16em}
 h1{font-size:34px;letter-spacing:-.04em;margin:0 0 12px}.intro{max-width:720px;color:#65707a;line-height:1.7;margin:0 0 28px}
 .panel{background:#fff;border:1px solid #e0e4e7;border-radius:12px;padding:22px;margin:16px 0}
 label{display:block;font-weight:700;font-size:14px;margin-bottom:10px}input[type=password]{width:100%;max-width:480px;padding:12px;border:1px solid #cfd5da;border-radius:7px;font-size:14px}
