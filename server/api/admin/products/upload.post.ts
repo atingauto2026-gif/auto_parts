@@ -1,5 +1,5 @@
-import { requireAdmin } from '../../../../utils/admin-auth'
-import { supabaseConfig } from '../../../../utils/supabase'
+import { requireAdmin } from '../../../utils/admin-auth'
+import { supabaseConfig } from '../../../utils/supabase'
 
 const ALLOWED: Record<string, string> = {
   'image/jpeg': 'jpg',
