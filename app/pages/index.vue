@@ -11,10 +11,6 @@ const { data: catalog } = await useFetch<{
 }>('/api/products', { key: 'home-products' })
 
 const products = computed(() => catalog.value?.products ?? [])
-const featured = computed(() =>
-  products.value.filter((product) => product.tags.includes('Best Seller')).slice(0, 4),
-)
-
 const sensorExamples = [
   { name: 'Coolant Temperature Sensor', category: 'Coolant Temperature Sensor', categoryId: 'coolant-temperature-sensor', partNumber: 'HDSW11401', oe: '83420-16050 / 83420-20040 / KT-9T', description: 'Engine coolant temperature sensing component from the current RoadReady catalogue.', image: 'https://cdn.ecommercedns.uk/files/8/263918/3/40065713/img-20240206-175423827.png', alt: 'Brass automotive coolant temperature sensor with blue electrical connector', source: 'https://shop.redlinetuning.co.uk/ect-water-temperature-sensor---m12x15', isCatalogueProduct: true },
   { name: 'Temperature Control Switch', category: 'Temperature Control Switch', categoryId: 'temperature-control-switch', partNumber: 'HDWK11301', oe: '89428-15020 / 89428-15030 / 89428-22050', description: 'Thermal switching component listed in the current RoadReady catalogue.', image: 'https://shop.zirgo.com/cdn/shop/files/2048_7b1ac7e6-c103-42be-bccf-f1b70bfb9392.jpg?v=1739530519', alt: 'Brass automotive radiator temperature control switch', source: 'https://shop.zirgo.com/products/radiator-temperature-control-sensor-kit-w-harness-180-degree-on-3-8-npt-12v', isCatalogueProduct: true },
@@ -102,25 +98,6 @@ useHead({
         <div class="home-stat"><AppIcon name="flask-conical" :size="48" /><strong>25+</strong><span>Years Experience</span></div>
         <div class="home-stat"><AppIcon name="shield-check" :size="48" /><strong>10+</strong><span>Patents</span></div>
         <div class="home-stat"><AppIcon name="users-round" :size="48" /><strong>100+</strong><span>Team Members</span></div>
-      </div>
-    </section>
-
-    <section class="home-section home-featured">
-      <div class="home-container">
-        <div class="home-section__head">
-          <div>
-            <p class="home-kicker home-kicker--dark"><span></span>RoadReady catalogue</p>
-            <h2>Featured components</h2>
-          </div>
-          <NuxtLink to="/products" class="home-text-link">Browse catalogue <AppIcon name="arrow-right" :size="15" /></NuxtLink>
-        </div>
-        <div v-if="featured.length" class="p-grid home-product-grid">
-          <ProductCard v-for="product in featured" :key="product.id" :product="product" />
-        </div>
-        <div v-else class="home-empty">
-          <p>Our specialist catalogue is being prepared. Contact our team for availability, MOQ and OE reference support.</p>
-          <NuxtLink to="/products" class="home-text-link">Browse all parts <AppIcon name="arrow-right" :size="15" /></NuxtLink>
-        </div>
       </div>
     </section>
 
@@ -264,7 +241,6 @@ useHead({
 .home-category__label { bottom:21px; left:20px; max-width:calc(100% - 75px); font-size:17px; font-weight:800; letter-spacing:-.02em; text-transform:uppercase; }
 .home-category__arrow { right:18px; bottom:17px; display:grid; width:34px; height:34px; place-items:center; border:1px solid rgba(255,255,255,.65); border-radius:50%; transition:background .2s,border .2s; }
 .home-category:hover .home-category__arrow { border-color:var(--home-accent); background:var(--home-accent); }
-.home-featured { background:#fff; }
 .home-product-grid { margin-top:8px; }
 .home-empty { display:flex; justify-content:space-between; gap:24px; padding:35px; border:1px solid #e0e5e8; border-radius:5px; background:#f8f9fa; }
 .home-sensor-showcase { background:#f4f6f7; }
