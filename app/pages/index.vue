@@ -16,34 +16,12 @@ const featured = computed(() =>
 )
 
 const sensorExamples = [
-  {
-    name: 'Coolant Temperature Sensor',
-    category: 'Engine management',
-    description: 'Monitors engine coolant temperature to support accurate engine management.',
-    image: 'https://padminivna.com/uploads/product/709c5ec8b29349c57d3c90127c18611b.png',
-    alt: 'Automotive coolant temperature sensors with threaded metal probes and electrical connectors',
-  },
-  {
-    name: 'MAP Pressure Sensor',
-    category: 'Air intake system',
-    description: 'Measures intake manifold pressure for engine load calculation.',
-    image: 'https://www.ecerimg.com/nimg/b7/1c/ec36c9554c6b95b405aa40bae2eb.jpg',
-    alt: 'Automotive manifold absolute pressure sensors displayed on a white background',
-  },
-  {
-    name: 'Oxygen Sensor',
-    category: 'Exhaust system',
-    description: 'Monitors oxygen content in exhaust gases for emissions and fuel control.',
-    image: 'https://auto724.co.uk/media/catalog/category/exhaust.jpg',
-    alt: 'Automotive oxygen sensors and exhaust monitoring components',
-  },
-  {
-    name: 'Mass Air Flow Sensor',
-    category: 'Air intake system',
-    description: 'Measures the volume of air entering the engine for fuel management.',
-    image: 'https://www.bosch-ibusiness.com/media/images/products/sensors/sensors_3200x1800.jpg',
-    alt: 'Automotive mass air flow and engine sensors from a sensor product range',
-  },
+  { name: 'Coolant Temperature Sensor', category: 'Coolant Temperature Sensor', categoryId: 'coolant-temperature-sensor', partNumber: 'HDSW11401', oe: '83420-16050 / 83420-20040 / KT-9T', description: 'Engine coolant temperature sensing component from the current RoadReady catalogue.', image: 'https://cdn.ecommercedns.uk/files/8/263918/3/40065713/img-20240206-175423827.png', alt: 'Brass automotive coolant temperature sensor with blue electrical connector', source: 'https://shop.redlinetuning.co.uk/ect-water-temperature-sensor---m12x15', isCatalogueProduct: true },
+  { name: 'Temperature Control Switch', category: 'Temperature Control Switch', categoryId: 'temperature-control-switch', partNumber: 'HDWK11301', oe: '89428-15020 / 89428-15030 / 89428-22050', description: 'Thermal switching component listed in the current RoadReady catalogue.', image: 'https://shop.zirgo.com/cdn/shop/files/2048_7b1ac7e6-c103-42be-bccf-f1b70bfb9392.jpg?v=1739530519', alt: 'Brass automotive radiator temperature control switch', source: 'https://shop.zirgo.com/products/radiator-temperature-control-sensor-kit-w-harness-180-degree-on-3-8-npt-12v', isCatalogueProduct: true },
+  { name: 'Reverse Light Switch', category: 'Reverse Light Switch', categoryId: 'reverse-light-switch', partNumber: 'Image sample', oe: 'Confirm by vehicle', description: 'Representative gearbox-mounted reverse lamp switch. A matching RoadReady product record is not yet listed.', image: 'https://www.design911.co.uk/uploads/products/fe193cd1-e1b9-4d89-84fc-6d25027d113e/99660613300_5.jpg', alt: 'Automotive gearbox reverse light switch with threaded metal body and black connector', source: 'https://www.design911.co.uk/porsche/997-turbo-2009/porsche-reverse-light-switches/', isCatalogueProduct: false },
+  { name: 'Solenoid Valve', category: 'Solenoid Valve', categoryId: 'solenoid-valve', partNumber: 'Image sample', oe: 'Confirm by vehicle', description: 'Representative automotive solenoid valve. A matching RoadReady product record is not yet listed.', image: 'https://www.ymfcarparts.co.uk/images/shop/more/1500x1500_40273_96ebbdfcbbc04d4d5351783f8c5492ad_1701481.jpg.jpeg', alt: 'Automotive metal solenoid valve with black electrical connector', source: 'https://www.ymfcarparts.co.uk/febi-bilstein-solenoid-valve-170148/', isCatalogueProduct: false },
+  { name: 'Oil Pressure Warning Switch', category: 'Oil Pressure Alarm', categoryId: 'oil-pressure-alarm', partNumber: 'HDJY01101', oe: '83530-14030', description: 'Oil pressure warning switch from the current RoadReady catalogue.', image: 'https://ecommerce-assets.ext.gm.com/assets/products/images/D8050_Primary.jpg?impolicy=resize_image_for_grid_640', alt: 'Automotive engine oil pressure switch with metal threaded body and electrical terminal', source: 'https://parts.gmparts.com/product/acdelco-gold-engine-oil-pressure-switch-89057533', isCatalogueProduct: true },
+  { name: 'TPMS Tire Pressure Sensor', category: 'Tire Pressure Sensor', categoryId: 'tire-pressure-sensor', partNumber: 'Image sample', oe: 'Confirm by vehicle', description: 'Representative wheel-mounted tire pressure monitoring sensor. A matching RoadReady product record is not yet listed.', image: 'https://felgeo.pl/hpeciai/a300586f50a2c0a520887ec1b0bd7e30/pol_pl_Czujnik-cisnienia-opon-TPMS-do-VOLKSWAGEN-CC-2011-2018-433MHZ-46605_1.jpg', alt: 'Automotive TPMS tire pressure sensor with metal valve stem and black transmitter housing', source: 'https://felgeo.pl/product-pol-46605-Czujnik-cisnienia-opon-TPMS-do-VOLKSWAGEN-CC-2011-2018-433MHZ.html', isCatalogueProduct: false },
 ]
 
 function findParts() {
@@ -151,8 +129,8 @@ useHead({
         <div class="home-section__head">
           <div>
             <p class="home-kicker home-kicker--dark"><span></span>Product showcase</p>
-            <h2>Automotive sensor range</h2>
-            <p class="home-sensor-intro">A closer look at the components we specialise in. These are visual examples; confirm the exact part number and OE reference for your vehicle.</p>
+            <h2>Products by category</h2>
+            <p class="home-sensor-intro">One representative item from each RoadReady product category. Images are illustrative references; confirm exact fitment and OE numbers before ordering.</p>
           </div>
           <NuxtLink to="/products" class="home-text-link">Explore all products <AppIcon name="arrow-right" :size="15" /></NuxtLink>
         </div>
@@ -160,21 +138,22 @@ useHead({
           <article v-for="sensor in sensorExamples" :key="sensor.name" class="home-sensor-card">
             <div class="home-sensor-card__image">
               <img :src="sensor.image" :alt="sensor.alt" loading="lazy">
-              <span class="home-sensor-card__tag">Example</span>
+              <span class="home-sensor-card__tag">{{ sensor.isCatalogueProduct ? 'Catalogue item' : 'Image sample' }}</span>
             </div>
             <div class="home-sensor-card__body">
               <span class="home-sensor-card__category">{{ sensor.category }}</span>
               <h3>{{ sensor.name }}</h3>
               <p>{{ sensor.description }}</p>
               <dl>
-                <div><dt>Part number</dt><dd>To be confirmed</dd></div>
-                <div><dt>OE reference</dt><dd>To be confirmed</dd></div>
+                <div><dt>Part number</dt><dd>{{ sensor.partNumber }}</dd></div>
+                <div><dt>OE reference</dt><dd>{{ sensor.oe }}</dd></div>
               </dl>
-              <NuxtLink to="/contact" class="home-sensor-card__link">Enquire about this part <AppIcon name="arrow-right" :size="14" /></NuxtLink>
+              <NuxtLink :to="'/products?category=' + sensor.categoryId" class="home-sensor-card__link">View category <AppIcon name="arrow-right" :size="14" /></NuxtLink>
+              <a :href="sensor.source" target="_blank" rel="noopener noreferrer" class="home-sensor-source">Image reference ↗</a>
             </div>
           </article>
         </div>
-        <p class="home-sensor-note">Illustrative product images only. Product identifiers, specifications and vehicle fitment will be added from verified catalogue records.</p>
+        <p class="home-sensor-note">Three categories currently have matching product records in RoadReady. The other three use reference images only; they are not represented as stocked or verified RoadReady products.</p>
       </div>
     </section>
 
@@ -290,7 +269,7 @@ useHead({
 .home-empty { display:flex; justify-content:space-between; gap:24px; padding:35px; border:1px solid #e0e5e8; border-radius:5px; background:#f8f9fa; }
 .home-sensor-showcase { background:#f4f6f7; }
 .home-sensor-intro { max-width:620px; margin-top:14px; color:#687781; font-size:14px; line-height:1.7; }
-.home-sensor-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.home-sensor-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
 .home-sensor-card { min-width:0; overflow:hidden; border:1px solid #e1e6e9; border-radius:5px; background:#fff; box-shadow:0 8px 24px rgba(21,34,43,.045); }
 .home-sensor-card__image { position:relative; display:grid; height:220px; place-items:center; overflow:hidden; background:#fff; }
 .home-sensor-card__image img { width:100%; height:100%; object-fit:contain; transition:transform .35s; }
@@ -306,6 +285,7 @@ useHead({
 .home-sensor-card dd { color:#34434d; font-size:10px; font-weight:800; text-align:right; }
 .home-sensor-card__link { display:inline-flex; align-items:center; gap:7px; margin-top:17px; color:#18242d; font-size:11px; font-weight:800; }
 .home-sensor-card__link:hover { color:#e16d35; }
+.home-sensor-source { display:inline-block; margin:9px 0 0 12px; color:#89949c; font-size:10px; text-decoration:underline; text-underline-offset:3px; }
 .home-sensor-note { margin-top:18px; color:#87929a; font-size:10px; line-height:1.6; }
 .home-callout { display:grid; min-height:490px; grid-template-columns:1.05fr .95fr; background:#17232c; color:#fff; }
 .home-callout__image { min-height:390px; overflow:hidden; }
