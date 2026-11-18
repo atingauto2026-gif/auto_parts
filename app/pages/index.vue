@@ -21,6 +21,37 @@ const featured = computed(() =>
   products.value.filter((product) => product.tags.includes('Best Seller')).slice(0, 4),
 )
 
+const sensorExamples = [
+  {
+    name: 'Coolant Temperature Sensor',
+    category: 'Engine management',
+    description: 'Monitors engine coolant temperature to support accurate engine management.',
+    image: 'https://padminivna.com/uploads/product/709c5ec8b29349c57d3c90127c18611b.png',
+    alt: 'Automotive coolant temperature sensors with threaded metal probes and electrical connectors',
+  },
+  {
+    name: 'MAP Pressure Sensor',
+    category: 'Air intake system',
+    description: 'Measures intake manifold pressure for engine load calculation.',
+    image: 'https://www.ecerimg.com/nimg/b7/1c/ec36c9554c6b95b405aa40bae2eb.jpg',
+    alt: 'Automotive manifold absolute pressure sensors displayed on a white background',
+  },
+  {
+    name: 'Oxygen Sensor',
+    category: 'Exhaust system',
+    description: 'Monitors oxygen content in exhaust gases for emissions and fuel control.',
+    image: 'https://auto724.co.uk/media/catalog/category/exhaust.jpg',
+    alt: 'Automotive oxygen sensors and exhaust monitoring components',
+  },
+  {
+    name: 'Mass Air Flow Sensor',
+    category: 'Air intake system',
+    description: 'Measures the volume of air entering the engine for fuel management.',
+    image: 'https://www.bosch-ibusiness.com/media/images/products/sensors/sensors_3200x1800.jpg',
+    alt: 'Automotive mass air flow and engine sensors from a sensor product range',
+  },
+]
+
 function findParts() {
   const query = search.value.trim()
   router.push({ path: '/products', query: query ? { q: query } : {} })
@@ -137,6 +168,38 @@ useHead({
       </div>
     </section>
 
+    <section class="home-section home-sensor-showcase">
+      <div class="home-container">
+        <div class="home-section__head">
+          <div>
+            <p class="home-kicker home-kicker--dark"><span></span>Product showcase</p>
+            <h2>Automotive sensor range</h2>
+            <p class="home-sensor-intro">A closer look at the components we specialise in. These are visual examples; confirm the exact part number and OE reference for your vehicle.</p>
+          </div>
+          <NuxtLink to="/products" class="home-text-link">Explore all products <AppIcon name="arrow-right" :size="15" /></NuxtLink>
+        </div>
+        <div class="home-sensor-grid">
+          <article v-for="sensor in sensorExamples" :key="sensor.name" class="home-sensor-card">
+            <div class="home-sensor-card__image">
+              <img :src="sensor.image" :alt="sensor.alt" loading="lazy">
+              <span class="home-sensor-card__tag">Example</span>
+            </div>
+            <div class="home-sensor-card__body">
+              <span class="home-sensor-card__category">{{ sensor.category }}</span>
+              <h3>{{ sensor.name }}</h3>
+              <p>{{ sensor.description }}</p>
+              <dl>
+                <div><dt>Part number</dt><dd>To be confirmed</dd></div>
+                <div><dt>OE reference</dt><dd>To be confirmed</dd></div>
+              </dl>
+              <NuxtLink to="/contact" class="home-sensor-card__link">Enquire about this part <AppIcon name="arrow-right" :size="14" /></NuxtLink>
+            </div>
+          </article>
+        </div>
+        <p class="home-sensor-note">Illustrative product images only. Product identifiers, specifications and vehicle fitment will be added from verified catalogue records.</p>
+      </div>
+    </section>
+
     <section class="home-callout">
       <div class="home-callout__image">
         <img
@@ -241,6 +304,25 @@ useHead({
 .home-featured { background:#fff; }
 .home-product-grid { margin-top:8px; }
 .home-empty { display:flex; justify-content:space-between; gap:24px; padding:35px; border:1px solid #e0e5e8; border-radius:5px; background:#f8f9fa; }
+.home-sensor-showcase { background:#f4f6f7; }
+.home-sensor-intro { max-width:620px; margin-top:14px; color:#687781; font-size:14px; line-height:1.7; }
+.home-sensor-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.home-sensor-card { min-width:0; overflow:hidden; border:1px solid #e1e6e9; border-radius:5px; background:#fff; box-shadow:0 8px 24px rgba(21,34,43,.045); }
+.home-sensor-card__image { position:relative; display:grid; height:220px; place-items:center; overflow:hidden; background:#fff; }
+.home-sensor-card__image img { width:100%; height:100%; object-fit:contain; transition:transform .35s; }
+.home-sensor-card:hover .home-sensor-card__image img { transform:scale(1.045); }
+.home-sensor-card__tag { position:absolute; top:12px; left:12px; padding:5px 8px; border-radius:2px; background:#e16d35; color:#fff; font-size:9px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; }
+.home-sensor-card__body { padding:19px 18px 18px; }
+.home-sensor-card__category { color:#e16d35; font-size:9px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
+.home-sensor-card h3 { min-height:44px; margin-top:8px; color:#18242d; font-size:17px; font-weight:800; line-height:1.25; }
+.home-sensor-card__body>p { min-height:66px; margin-top:9px; color:#687781; font-size:12px; line-height:1.65; }
+.home-sensor-card dl { margin-top:15px; border-top:1px solid #edf0f2; }
+.home-sensor-card dl>div { display:flex; justify-content:space-between; gap:8px; padding-top:10px; }
+.home-sensor-card dt { color:#849099; font-size:10px; }
+.home-sensor-card dd { color:#34434d; font-size:10px; font-weight:800; text-align:right; }
+.home-sensor-card__link { display:inline-flex; align-items:center; gap:7px; margin-top:17px; color:#18242d; font-size:11px; font-weight:800; }
+.home-sensor-card__link:hover { color:#e16d35; }
+.home-sensor-note { margin-top:18px; color:#87929a; font-size:10px; line-height:1.6; }
 .home-callout { display:grid; min-height:490px; grid-template-columns:1.05fr .95fr; background:#17232c; color:#fff; }
 .home-callout__image { min-height:390px; overflow:hidden; }
 .home-callout__image img { width:100%; height:100%; object-fit:cover; }
@@ -279,6 +361,11 @@ useHead({
   .home-category__number { top:12px; left:13px; }
   .home-category__arrow { right:10px; bottom:10px; width:28px; height:28px; }
   .home-empty { flex-direction:column; padding:23px; }
+  .home-sensor-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
+  .home-sensor-card__image { height:170px; }
+  .home-sensor-card__body { padding:15px 13px; }
+  .home-sensor-card h3 { min-height:0; font-size:15px; }
+  .home-sensor-card__body>p { min-height:0; }
   .home-callout { grid-template-columns:1fr; }
   .home-callout__image { min-height:250px; max-height:310px; }
   .home-callout__copy { padding:43px 24px 50px; }
