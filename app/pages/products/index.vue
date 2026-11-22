@@ -60,12 +60,13 @@ const title = computed(() =>
 )
 
 useSeoMeta({
-  title: () => `${title.value} | VAKTRA`,
+  // The global titleTemplate in nuxt.config.ts appends " | VAKTRA" — do not add it here again.
+  title: () => title.value,
   description:
     'Browse VAKTRA automotive sensors, switches, solenoid valves and pressure monitoring components.',
   ogTitle: () => `${title.value} | VAKTRA`,
   ogDescription:
-    'Find parts and accessories for your next drive.',
+    'OE-referenced sensors and control components for distributors, importers and workshop chains. Request wholesale pricing and fitment data.',
   ogType: 'website',
 })
 
