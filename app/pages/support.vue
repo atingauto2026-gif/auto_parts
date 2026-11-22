@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const config = useRuntimeConfig()
 
+const ogImage = `${config.public.siteUrl}/og/og-cover.jpg`
+
 const channels = computed(() => [
   ...(config.public.email
     ? [{
@@ -24,7 +26,7 @@ const channels = computed(() => [
     ? [{
         icon: 'whatsapp',
         title: 'WhatsApp',
-        value: 'Chat with our team',
+        value: 'Chat with our export team',
         action: `https://wa.me/${config.public.whatsapp}`,
         label: 'Message us',
       }]
@@ -32,11 +34,13 @@ const channels = computed(() => [
 ])
 
 useSeoMeta({
-  title: 'Help & Support | RoadReady Auto',
-  description: 'Get help with auto parts, vehicle fitment, installation and product questions.',
+  title: 'Help & support',
+  description:
+    'OE cross-reference checks, quotations with full trade terms, shipping documents and after-shipment support for wholesale buyers.',
   ogTitle: 'RoadReady Auto Support',
-  ogDescription: 'Get help with parts and vehicle fitment.',
+  ogDescription: 'Procurement support for wholesale buyers — from enquiry to shipment.',
   ogType: 'website',
+  ogImage,
 })
 
 useHead({
@@ -48,9 +52,9 @@ useHead({
   <div>
     <section class="pg-hero">
       <div class="v-container">
-        <span class="v-eyebrow">Help & support</span>
-        <h1>Let’s get you<br>back on the road.</h1>
-        <p>Need help choosing a part, checking fitment or understanding product details? Start here.</p>
+        <span class="v-eyebrow">Help &amp; support</span>
+        <h1>Procurement support,<br>enquiry to shipment.</h1>
+        <p>Need a cross-reference checked, a quotation with full terms, or shipping documents prepared? Start here.</p>
       </div>
     </section>
 
@@ -72,8 +76,8 @@ useHead({
           </a>
         </div>
         <div v-else class="cart-empty">
-          <h2>Support details are being set up</h2>
-          <p>Use the contact form and our team will get back to you.</p>
+          <h2>Direct contact details are being finalised</h2>
+          <p>Use the enquiry form — it reaches the same export team.</p>
           <NuxtLink to="/contact" class="v-btn v-btn--primary">Contact us</NuxtLink>
         </div>
       </div>
@@ -82,38 +86,38 @@ useHead({
     <section class="v-section support-guide">
       <div class="v-container">
         <header class="lp-section-head">
-          <span class="v-eyebrow">Before you order</span>
-          <h2>A few details make all the difference.</h2>
-          <p class="v-lead">For the quickest fitment check, include the details below when you contact us.</p>
+          <span class="v-eyebrow">Before you enquire</span>
+          <h2>A few details make quoting faster.</h2>
+          <p class="v-lead">Include the details below and your first quotation will arrive with complete terms — not a round of follow-up questions.</p>
         </header>
 
         <div class="lp-grid lp-grid--3">
           <article class="lp-feature">
             <span class="support-guide__number">01</span>
-            <h3>Your vehicle</h3>
-            <p>Make, model, year, trim and engine. A VIN can help confirm exact fitment where needed.</p>
+            <h3>The part number</h3>
+            <p>Send the OE number, factory number or cross reference — or a photo of the part and its connector. We verify fitment and alternatives before quoting.</p>
           </article>
           <article class="lp-feature">
             <span class="support-guide__number">02</span>
-            <h3>The part</h3>
-            <p>Share the product name or link and tell us what you want it to do.</p>
+            <h3>Your programme</h3>
+            <p>Tell us your target volumes, order frequency and destination market so we can quote MOQ, lead time and packing that actually fit.</p>
           </article>
           <article class="lp-feature">
             <span class="support-guide__number">03</span>
-            <h3>Installation</h3>
-            <p>Check the manufacturer instructions. For brakes, steering, lighting and other safety-critical work, use a qualified installer.</p>
+            <h3>Shipping &amp; documents</h3>
+            <p>Incoterms, packing specification and export documents (commercial invoice, packing list, certificate of origin) are confirmed with every order.</p>
           </article>
         </div>
 
         <div class="ab-cta support-cta">
-          <span class="v-eyebrow">Still have a question?</span>
-          <h2>We’re happy to help you find your fit.</h2>
-          <p>Send your vehicle details and the product you’re considering.</p>
+          <span class="v-eyebrow">Ready to start?</span>
+          <h2>Send your part numbers.</h2>
+          <p>We will come back with availability, pricing and full trade terms.</p>
           <div class="ab-cta__actions">
             <NuxtLink to="/contact" class="v-btn v-btn--primary v-btn--lg">
-              Contact support <AppIcon name="arrow-right" :size="16" />
+              Send an enquiry <AppIcon name="arrow-right" :size="16" />
             </NuxtLink>
-            <NuxtLink to="/products" class="v-btn v-btn--outline v-btn--lg">Browse parts</NuxtLink>
+            <NuxtLink to="/trade-terms" class="v-btn v-btn--outline v-btn--lg">Read trade terms</NuxtLink>
           </div>
         </div>
       </div>

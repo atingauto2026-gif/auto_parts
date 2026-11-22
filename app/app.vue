@@ -5,6 +5,39 @@ const { scheme, sync } = useTheme()
 
 onMounted(sync)
 
+// Organization structured data for search engines and AI answer engines.
+// Fields stay empty until real company data is configured — JSON-LD only
+// includes keys that exist, so we never publish invented identity data.
+const config = useRuntimeConfig()
+const company = (config.public as Record<string, unknown>).company as Record<string, string> | undefined
+const orgJsonLd = computed(() => {
+  const c = company ?? {}
+  const org: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'RoadReady Auto',
+    description: 'Automotive sensors, switches and control components for wholesale buyers.',
+    url: config.public.siteUrl,
+    logo: `${config.public.siteUrl}/og/og-cover.jpg`,
+  }
+  if (c.legalName) org.legalName = c.legalName
+  if (c.foundedYear) org.foundingDate = c.foundedYear
+  if (c.markets) org.knowsAbout = c.markets
+  if (c.addressLine) org.address = { '@type': 'PostalAddress', streetAddress: c.addressLine }
+  if (config.public.email) org.email = config.public.email
+  if (config.public.phone) org.telephone = config.public.phone
+  if (config.public.whatsapp) org.contactPoint = {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    availableLanguage: ['en'],
+  }
+  return JSON.stringify(org)
+})
+
+useHead({
+  script: [{ type: 'application/ld+json', innerHTML: orgJsonLd }],
+})
+
 onMounted(async () => {
   const hash = window.location.hash
   if (!hash.includes('access_token=') || !hash.includes('refresh_token=')) return

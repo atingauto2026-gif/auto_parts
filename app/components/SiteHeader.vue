@@ -27,6 +27,7 @@ const dropdown = ref<HTMLElement | null>(null)
 
 const navLinks = [
   { label: 'About', to: '/about' },
+  { label: 'Trade terms', to: '/trade-terms' },
   { label: 'Support', to: '/support' },
   { label: 'Contact', to: '/contact' },
 ]

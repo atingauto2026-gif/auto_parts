@@ -27,14 +27,14 @@ function findParts() {
 }
 
 useSeoMeta({
-  title: 'Automotive sensors & control components | RoadReady Auto',
+  title: 'Automotive sensors & control components',
   description:
-    'Explore automotive sensors, switches, solenoid valves and pressure monitoring components. Request wholesale pricing and fitment support.',
-  ogTitle: 'RoadReady Auto | Automotive components',
+    'OE-referenced automotive sensors, switches, solenoid valves and pressure monitoring components for wholesale buyers. Request pricing, MOQ and fitment support.',
+  ogTitle: 'RoadReady Auto — automotive sensors & control components',
   ogDescription:
-    'Specialist automotive sensors, switches and control components. Enquire for wholesale pricing and fitment support.',
+    'OE-referenced sensors, switches and control components for distributors, importers and workshop chains. Wholesale enquiries welcome.',
   ogType: 'website',
-  ogImage: 'https://di-uploads-pod47.dealerinspire.com/beamantoyota1/uploads/2025/05/2025_Toyota_RAV4_blue_SUV_exterior.png',
+  ogImage: `${config.public.siteUrl}/og/og-cover.jpg`,
 })
 
 useHead({
@@ -53,8 +53,8 @@ useHead({
     <section class="home-hero">
       <img
         class="home-hero__image"
-        src="https://di-uploads-pod47.dealerinspire.com/beamantoyota1/uploads/2025/05/2025_Toyota_RAV4_blue_SUV_exterior.png"
-        alt="2025 Toyota RAV4, a representative vehicle for RoadReady automotive components"
+        src="/og/hero-components.jpg"
+        alt="Automotive sensors, switches and solenoid valves on a workbench"
         fetchpriority="high"
       >
       <div class="home-hero__shade"></div>
@@ -85,11 +85,11 @@ useHead({
       <div class="home-hero__index">01 / ENGINEERED FOR PERFORMANCE</div>
     </section>
 
-    <section class="home-assurance" aria-label="Why shop with us">
+    <section class="home-assurance" aria-label="Why buyers work with us">
       <div class="home-container home-assurance__grid">
-        <div><span class="home-assurance__mark">01</span><p><strong>Precision components</strong><small>Consistent quality standards</small></p></div>
-        <div><span class="home-assurance__mark">02</span><p><strong>Application support</strong><small>Find the correct part number</small></p></div>
-        <div><span class="home-assurance__mark">03</span><p><strong>Built for reliability</strong><small>Responsive technical assistance</small></p></div>
+        <div><span class="home-assurance__mark">01</span><p><strong>OE-referenced catalogue</strong><small>Fitment checked before listing</small></p></div>
+        <div><span class="home-assurance__mark">02</span><p><strong>Wholesale-ready supply</strong><small>MOQ, lead time and packing confirmed at quotation</small></p></div>
+        <div><span class="home-assurance__mark">03</span><p><strong>Technical support</strong><small>Application and cross-reference help from our team</small></p></div>
       </div>
     </section>
 
@@ -147,9 +147,9 @@ useHead({
       </div>
       <div class="home-callout__copy">
         <p class="home-kicker"><span></span>Need help identifying a part?</p>
-        <h2>Let’s confirm<br><em>the right fit.</em></h2>
-        <p>Send us the vehicle make, model, year or OE reference. Our team will help identify the correct component and application.</p>
-        <NuxtLink to="/contact" class="home-button">Request product support <AppIcon name="arrow-right" :size="16" /></NuxtLink>
+        <h2>Let’s confirm<br><em>the right part.</em></h2>
+        <p>Send us the OE number, factory number or an application photo. Our team will cross-reference the correct component and confirm availability.</p>
+        <NuxtLink to="/contact" class="home-button">Request a quotation <AppIcon name="arrow-right" :size="16" /></NuxtLink>
       </div>
     </section>
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const config = useRuntimeConfig()
 const year = new Date().getFullYear()
+const company = config.public.company as Record<string, string>
 
 const productLinks = [
   { label: 'Coolant Temperature Sensor', to: '/products?category=coolant-temperature-sensor' },
@@ -13,9 +14,16 @@ const productLinks = [
 
 const companyLinks = [
   { label: 'About RoadReady', to: '/about' },
+  { label: 'Trade terms', to: '/trade-terms' },
   { label: 'Support', to: '/support' },
   { label: 'Contact', to: '/contact' },
   { label: 'All products', to: '/products' },
+]
+
+const legalLinks = [
+  { label: 'Privacy policy', to: '/legal/privacy' },
+  { label: 'Terms of sale', to: '/legal/terms' },
+  { label: 'Imprint', to: '/legal/imprint' },
 ]
 </script>
 
@@ -24,9 +32,9 @@ const companyLinks = [
     <div class="v-container">
       <div class="site-footer__grid">
         <div class="site-footer__brand">
-          <div class="site-footer__wordmark">ROADREADY<span>AUTO PARTS & ACCESSORIES</span></div>
+          <div class="site-footer__wordmark">ROADREADY<span>AUTO PARTS &amp; ACCESSORIES</span></div>
           <p class="site-footer__tagline">
-            Automotive sensors, switches and control components engineered for dependable performance.
+            OE-referenced automotive sensors, switches and control components for distributors, importers and workshop chains.
           </p>
         </div>
 
@@ -46,20 +54,38 @@ const companyLinks = [
 
         <div>
           <div class="site-footer__heading">Contact</div>
-          <a class="site-footer__link" :href="`mailto:${config.public.email}`">
+          <a v-if="config.public.email" class="site-footer__link" :href="`mailto:${config.public.email}`">
             {{ config.public.email }}
           </a>
-          <a class="site-footer__link" :href="`tel:${config.public.phone}`">
+          <a v-if="config.public.phone" class="site-footer__link" :href="`tel:${config.public.phone}`">
             {{ config.public.phone }}
           </a>
-          <span class="site-footer__link">Online auto parts & accessories</span>
+          <a
+            v-if="config.public.whatsapp"
+            class="site-footer__link"
+            :href="`https://wa.me/${config.public.whatsapp}`"
+            target="_blank"
+            rel="noopener"
+          >
+            WhatsApp: {{ config.public.whatsapp }}
+          </a>
+          <span v-if="company?.addressLine" class="site-footer__link">{{ company.addressLine }}</span>
+          <NuxtLink to="/contact" class="site-footer__link">Send an enquiry →</NuxtLink>
         </div>
       </div>
 
       <div class="site-footer__bottom">
-        <span>© {{ year }} RoadReady Auto. All rights reserved.</span>
-        <span>Product enquiries and fitment support from the RoadReady team.</span>
+        <span>© {{ year }} {{ company?.legalName || 'RoadReady Auto' }}. All rights reserved.</span>
+        <span class="site-footer__legal">
+          <NuxtLink v-for="link in legalLinks" :key="link.to" :to="link.to">{{ link.label }}</NuxtLink>
+        </span>
       </div>
     </div>
   </footer>
 </template>
+
+<style scoped>
+.site-footer__legal { display: inline-flex; flex-wrap: wrap; gap: 14px; }
+.site-footer__legal a { color: inherit; text-decoration: none; opacity: .72; }
+.site-footer__legal a:hover { opacity: 1; text-decoration: underline; }
+</style>
