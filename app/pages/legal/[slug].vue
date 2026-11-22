@@ -18,8 +18,8 @@ const imprintFacts = computed(() => [
   { label: 'Registered address', value: company?.addressLine },
   { label: 'Registration no.', value: company?.registrationNo },
   { label: 'VAT / EORI', value: company?.vatId },
-  { label: 'Established', value: company?.foundedYear },
-  { label: 'Manufacturing partner since', value: company?.factorySince },
+  { label: 'Company incorporated', value: company?.foundedYear },
+  { label: 'Our own factory since', value: company?.factorySince },
   { label: 'Email', value: config.public.email },
   { label: 'Telephone / WhatsApp', value: config.public.phone },
 ].filter(item => Boolean(item.value)))
@@ -33,7 +33,7 @@ const docs: Record<string, {
   privacy: {
     navLabel: 'Privacy policy',
     title: 'Privacy policy',
-    description: 'How RoadReady Auto handles enquiry and business contact data.',
+    description: 'How VAKTRA handles enquiry and business contact data.',
     sections: [
       {
         heading: 'What we collect',
@@ -66,7 +66,7 @@ const docs: Record<string, {
   terms: {
     navLabel: 'Terms of sale',
     title: 'Terms of sale',
-    description: 'The commercial framework for orders placed with RoadReady Auto.',
+    description: 'The commercial framework for orders placed with VAKTRA.',
     sections: [
       {
         heading: 'Scope',

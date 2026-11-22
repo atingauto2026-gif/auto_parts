@@ -7,8 +7,8 @@ const ogImage = `${config.public.siteUrl}/og/og-cover.jpg`
 useSeoMeta({
   title: 'Trade terms',
   description:
-    'How RoadReady Auto works with wholesale buyers: MOQ and trial orders, lead time, Incoterms, payment, packing and warranty — confirmed on every quotation.',
-  ogTitle: 'RoadReady Auto — trade terms for wholesale buyers',
+    'How VAKTRA works with wholesale buyers: MOQ and trial orders, lead time, Incoterms, payment, packing and warranty — confirmed on every quotation.',
+  ogTitle: 'VAKTRA — trade terms for wholesale buyers',
   ogDescription:
     'MOQ, lead time, Incoterms, payment, packing and warranty — stated up front and confirmed on every quotation.',
   ogType: 'website',

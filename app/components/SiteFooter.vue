@@ -5,15 +5,15 @@ const company = config.public.company as Record<string, string>
 
 const productLinks = [
   { label: 'Coolant Temperature Sensor', to: '/products?category=coolant-temperature-sensor' },
-  { label: 'Temperature Control Switch', to: '/products?category=temperature-control-switch' },
+  { label: 'Thermostatic Switch', to: '/products?category=temperature-control-switch' },
   { label: 'Reverse Light Switch', to: '/products?category=reverse-light-switch' },
   { label: 'Solenoid Valve', to: '/products?category=solenoid-valve' },
-  { label: 'Oil Pressure Alarm', to: '/products?category=oil-pressure-alarm' },
+  { label: 'Oil Pressure Sensor', to: '/products?category=oil-pressure-alarm' },
   { label: 'Tire Pressure Sensor', to: '/products?category=tire-pressure-sensor' },
 ]
 
 const companyLinks = [
-  { label: 'About RoadReady', to: '/about' },
+  { label: 'About VAKTRA', to: '/about' },
   { label: 'Trade terms', to: '/trade-terms' },
   { label: 'Support', to: '/support' },
   { label: 'Contact', to: '/contact' },
@@ -32,7 +32,7 @@ const legalLinks = [
     <div class="v-container">
       <div class="site-footer__grid">
         <div class="site-footer__brand">
-          <div class="site-footer__wordmark">ROADREADY<span>AUTO PARTS &amp; ACCESSORIES</span></div>
+          <div class="site-footer__wordmark">VAKTRA<span>AUTO PARTS &amp; ACCESSORIES</span></div>
           <p class="site-footer__tagline">
             OE-referenced automotive sensors, switches and control components for distributors, importers and workshop chains.
           </p>
@@ -75,7 +75,7 @@ const legalLinks = [
       </div>
 
       <div class="site-footer__bottom">
-        <span>© {{ year }} {{ company?.legalName || 'RoadReady Auto' }}. All rights reserved.</span>
+        <span>© {{ year }} {{ company?.legalName || 'VAKTRA' }}. All rights reserved.</span>
         <span class="site-footer__legal">
           <NuxtLink v-for="link in legalLinks" :key="link.to" :to="link.to">{{ link.label }}</NuxtLink>
         </span>

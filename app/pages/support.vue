@@ -37,7 +37,7 @@ useSeoMeta({
   title: 'Help & support',
   description:
     'OE cross-reference checks, quotations with full trade terms, shipping documents and after-shipment support for wholesale buyers.',
-  ogTitle: 'RoadReady Auto Support',
+  ogTitle: 'VAKTRA Support',
   ogDescription: 'Procurement support for wholesale buyers — from enquiry to shipment.',
   ogType: 'website',
   ogImage,

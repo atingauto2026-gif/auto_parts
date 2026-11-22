@@ -14,10 +14,10 @@ const categories = computed(() => catalog.value?.categories ?? [])
 // Keep the desktop Products dropdown complete even if the categories API is unavailable.
 const productMenuCategories = [
   { id: 'coolant-temperature-sensor', label: 'Coolant Temperature Sensor' },
-  { id: 'temperature-control-switch', label: 'Temperature Control Switch' },
+  { id: 'temperature-control-switch', label: 'Thermostatic Switch' },
   { id: 'reverse-light-switch', label: 'Reverse Light Switch' },
   { id: 'solenoid-valve', label: 'Solenoid Valve' },
-  { id: 'oil-pressure-alarm', label: 'Oil Pressure Alarm' },
+  { id: 'oil-pressure-alarm', label: 'Oil Pressure Sensor' },
   { id: 'tire-pressure-sensor', label: 'Tire Pressure Sensor' },
 ]
 
@@ -57,9 +57,9 @@ const accountUrl = computed(() => config.public.storeDomain ? `https://${config.
 <template>
   <header class="site-header">
     <div class="v-container site-header__inner">
-      <NuxtLink to="/" class="site-header__logo" aria-label="RoadReady Auto home" @click="closeAll">
+      <NuxtLink to="/" class="site-header__logo" aria-label="VAKTRA home" @click="closeAll">
         <span class="site-logo-mark">R</span>
-        <span class="site-logo-wordmark">ROADREADY<span>AUTO PARTS & ACCESSORIES</span></span>
+        <span class="site-logo-wordmark">VAKTRA<span>AUTO PARTS & ACCESSORIES</span></span>
       </NuxtLink>
 
       <nav class="site-header__nav" aria-label="Primary">

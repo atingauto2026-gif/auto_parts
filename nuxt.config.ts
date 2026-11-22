@@ -3,16 +3,16 @@ export default defineNuxtConfig({
  // ---------------------------------------------------------------------------
  // Site configuration — SINGLE source of truth for company identity.
  //
- // STATUS 2026-11-22: real contact details + company identity are filled in.
+ // STATUS 2026-11-22 (v2): brand = VAKTRA. Real contact details and company
+ // identity are filled in. The trading company was incorporated in 2025;
+ // our OWN factory has been manufacturing since 1999 (NOT a partner factory).
+ //
  // Still intentionally EMPTY — do not guess, buyers verify these:
  //   - trade.*  MOQ / lead time / Incoterms / payment / warranty / samples
  //   - company.registrationNo, company.vatId  (from the business licence)
- //   - siteUrl  (update once a custom domain is attached)
- //
- // foundedYear is deliberately empty: 1999 is the founding year of the partner
- // FACTORY, not of this trading company. It is published separately as
- // "Manufacturing partner since" so the site never implies a false company
- // age, and Organization JSON-LD emits no foundingDate.
+ //   - siteUrl, storeDomain, email: the custom domain and the domain-based
+ //     email address will be supplied later. Until then the site keeps the
+ //     pages.dev URL and the current Gmail address — both are real, not fake.
  //
  // legalName below is a standard Pinyin rendering — CONFIRM it matches the
  // English name on the business licence / bank account / export documents.
@@ -35,8 +35,8 @@ export default defineNuxtConfig({
     addressLine:"Bashui Industrial Zone, Tangxia Town, Rui'an, Wenzhou, Zhejiang, P.R. China",
     registrationNo:'', // fill from business licence
     vatId:'',          // VAT / EORI when applicable
-    foundedYear:'',    // company incorporation year — NOT the factory's
-    factorySince:'1999', // partner factory producing since 1999 (honest attribution)
+    foundedYear:'2025', // trading company incorporated in 2025
+    factorySince:'1999', // our OWN factory producing since 1999 (not a partner factory)
     markets:'Europe, North America, the Middle East and Southeast Asia',
    },
    trade:{ // commercial terms — shown on /trade-terms; empty = neutral wording
@@ -49,5 +49,5 @@ export default defineNuxtConfig({
    },
   }
  },
- app:{head:{htmlAttrs:{lang:'en'},titleTemplate:'%s | RoadReady Auto',meta:[{charset:'utf-8'},{name:'viewport',content:'width=device-width, initial-scale=1'},{name:'theme-color',content:'#f5f4f0'},{property:'og:site_name',content:'RoadReady Auto'}],link:[{rel:'preconnect',href:'https://fonts.googleapis.com'},{rel:'preconnect',href:'https://fonts.gstatic.com',crossorigin:'anonymous'},{rel:'stylesheet',href:'https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@500;600;700;800&display=swap'}],script:[{innerHTML:`(function(){var r=document.documentElement;r.classList.add('js');try{var s=localStorage.getItem('roadready-theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d){r.setAttribute('data-theme','dark');}}catch(e){}})();`,tagPriority:'critical'}]}},nitro:{compressPublicAssets:true},typescript:{strict:true,typeCheck:false}
+ app:{head:{htmlAttrs:{lang:'en'},titleTemplate:'%s | VAKTRA',meta:[{charset:'utf-8'},{name:'viewport',content:'width=device-width, initial-scale=1'},{name:'theme-color',content:'#f5f4f0'},{property:'og:site_name',content:'VAKTRA'}],link:[{rel:'preconnect',href:'https://fonts.googleapis.com'},{rel:'preconnect',href:'https://fonts.gstatic.com',crossorigin:'anonymous'},{rel:'stylesheet',href:'https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@500;600;700;800&display=swap'}],script:[{innerHTML:`(function(){var r=document.documentElement;r.classList.add('js');try{var s=localStorage.getItem('roadready-theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d){r.setAttribute('data-theme','dark');}}catch(e){}})();`,tagPriority:'critical'}]}},nitro:{compressPublicAssets:true},typescript:{strict:true,typeCheck:false}
 })

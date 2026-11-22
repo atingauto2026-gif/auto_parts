@@ -15,7 +15,7 @@ const orgJsonLd = computed(() => {
   const org: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'RoadReady Auto',
+    name: 'VAKTRA',
     description: 'Automotive sensors, switches and control components for wholesale buyers.',
     url: config.public.siteUrl,
     logo: `${config.public.siteUrl}/og/og-cover.jpg`,
@@ -65,7 +65,7 @@ const antdTheme = computed(() => {
   return {
     algorithm: dark ? antdThemeTools.darkAlgorithm : antdThemeTools.defaultAlgorithm,
     token: {
-      // RoadReady Auto palette, with Ant Design semantic states.
+      // VAKTRA palette, with Ant Design semantic states.
       colorPrimary: primary,
       colorPrimaryHover: dark ? '#f0a36c' : '#b85d25',
       colorPrimaryActive: dark ? '#d97732' : '#8f461d',

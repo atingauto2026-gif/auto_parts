@@ -5,10 +5,10 @@ type CsvRow = Record<string, string>
 
 const CATEGORY_RULES: Array<{ prefix: string; type: string }> = [
   { prefix: 'SW', type: 'Coolant Temperature Sensor' },
-  { prefix: 'WK', type: 'Temperature Control Switch' },
+  { prefix: 'WK', type: 'Thermostatic Switch' },
   { prefix: 'DCKG', type: 'Reverse Light Switch' },
   { prefix: 'DCF', type: 'Solenoid Valve' },
-  { prefix: 'JY', type: 'Oil Pressure Alarm' },
+  { prefix: 'JY', type: 'Oil Pressure Sensor' },
   { prefix: 'TY', type: 'Tire Pressure Sensor' },
 ]
 
@@ -60,7 +60,7 @@ function parseImages(value: string): string[] {
 async function storeImage(sourceUrl: string, factoryNo: string, index: number, baseUrl: string, publishableKey: string, storageToken: string) {
   const parsed = new URL(sourceUrl)
   if (parsed.protocol !== 'https:' || parsed.hostname !== 'hd.muhz.net') throw new Error('Image URL host is not allowed')
-  const response = await fetch(sourceUrl, { headers: { 'User-Agent': 'RoadReadyCatalogImporter/1.0' } })
+  const response = await fetch(sourceUrl, { headers: { 'User-Agent': 'VAKTRACatalogImporter/1.0' } })
   if (!response.ok) throw new Error(`Image source returned HTTP ${response.status}`)
   const mime = (response.headers.get('content-type') || '').split(';')[0]
   const ext = mime === 'image/png' ? 'png' : mime === 'image/webp' ? 'webp' : mime === 'image/gif' ? 'gif' : 'jpg'
@@ -139,7 +139,7 @@ export default defineEventHandler(async (event) => {
     ].filter(Boolean).join(' ')
     const payload = {
       title, description, description_html: description, product_type: type,
-      vendor: 'RoadReady Auto', tags: [factoryNo, ...oem.split(/[\/;,]+/).map(value => value.trim()).filter(Boolean).slice(0, 12)],
+      vendor: 'VAKTRA', tags: [factoryNo, ...oem.split(/[\/;,]+/).map(value => value.trim()).filter(Boolean).slice(0, 12)],
       available_for_sale: true, featured_image: images[0] ?? null, images,
       landing_content: null, is_published: true, sort_order: 0,
       factory_no: factoryNo, car_model: carModel, oem,

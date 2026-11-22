@@ -13,10 +13,10 @@ const ogImage = `${config.public.siteUrl}/og/og-cover.jpg`
 useSeoMeta({
   title: 'About us',
   description:
-    'RoadReady Auto is a sourcing and export partner for automotive sensors, switches and control components — OE-referenced, fitment-checked and packed for wholesale distribution.',
-  ogTitle: 'About RoadReady Auto',
+    'VAKTRA is the export and trading company behind our own Wenzhou factory — automotive sensors, switches and control components manufactured since 1999, OE-referenced and fitment-checked.',
+  ogTitle: 'About VAKTRA',
   ogDescription:
-    'OE-referenced automotive sensors and control components, sourced from a vetted manufacturer network and verified before listing.',
+    'OE-referenced automotive sensors and control components, produced in our own factory and verified against OE and application data before listing.',
   ogType: 'website',
   ogImage,
 })
@@ -48,9 +48,9 @@ const principles = [
   <div class="about-page">
     <section class="pg-hero">
       <div class="v-container">
-        <span class="v-eyebrow">About RoadReady</span>
+        <span class="v-eyebrow">About VAKTRA</span>
         <h1>The supplier behind<br>the part number.</h1>
-        <p>RoadReady Auto is a sourcing and export partner for automotive sensors, switches and control components — built for distributors, importers and workshop chains.</p>
+        <p>VAKTRA is the export company behind a Wenzhou factory building automotive sensors, switches and control components since 1999 — supplying distributors, importers and workshop chains.</p>
       </div>
     </section>
 
@@ -62,10 +62,11 @@ const principles = [
         </div>
         <div class="about-intro__copy">
           <p>
-            RoadReady Auto exists to make wholesale sourcing of automotive sensors and control
-            components predictable. We work with a vetted manufacturer network in eastern China's
-            automotive supply belt, verify every part number against OE references and application
-            data, and quote with complete commercial terms.
+            VAKTRA is a Wenzhou trading and export company incorporated in 2025, set up to serve
+            international buyers of the products made by our own factory in Rui'an — manufacturing
+            automotive sensors, switches and control components since 1999. We verify every part
+            number against OE references and application data, and quote with complete commercial
+            terms.
           </p>
           <p>
             Our catalogue is deliberately compact — six specialist categories instead of ten
@@ -81,8 +82,8 @@ const principles = [
         <span class="v-eyebrow">Company facts</span>
         <dl class="about-facts__grid">
           <div v-if="company.legalName"><dt>Registered name</dt><dd>{{ company.legalName }}</dd></div>
-          <div v-if="company.foundedYear"><dt>Established</dt><dd>{{ company.foundedYear }}</dd></div>
-          <div v-if="company.factorySince"><dt>Manufacturing partner since</dt><dd>{{ company.factorySince }}</dd></div>
+          <div v-if="company.foundedYear"><dt>Company incorporated</dt><dd>{{ company.foundedYear }}</dd></div>
+          <div v-if="company.factorySince"><dt>Our own factory since</dt><dd>{{ company.factorySince }}</dd></div>
           <div v-if="company.markets"><dt>Export markets</dt><dd>{{ company.markets }}</dd></div>
           <div v-if="company.addressLine"><dt>Registered address</dt><dd>{{ company.addressLine }}</dd></div>
           <div v-if="company.registrationNo"><dt>Registration no.</dt><dd>{{ company.registrationNo }}</dd></div>

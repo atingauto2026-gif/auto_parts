@@ -1,4 +1,4 @@
-# RoadReady Auto
+# VAKTRA
 
 Nuxt 4 + Vue 3 storefront with a Supabase PostgreSQL backend.
 
@@ -21,7 +21,7 @@ Project ref: `npxpxlosubxgkgsbyfnv`.
 
 ### Database
 
-The migration `replace_shopify_with_supabase_storefront` creates `categories`, `products`, `product_variants`, `carts`, `cart_items` and `leads`. The public catalogue uses six specialist categories: Coolant Temperature Sensor, Temperature Control Switch, Reverse Light Switch, Solenoid Valve, Oil Pressure Alarm and Tire Pressure Sensor. Original demo products are unpublished; publish approved inventory with verified fitment data before launch.
+The migration `replace_shopify_with_supabase_storefront` creates `categories`, `products`, `product_variants`, `carts`, `cart_items` and `leads`. The public catalogue uses six specialist categories: Coolant Temperature Sensor, Thermostatic Switch, Reverse Light Switch, Solenoid Valve, Oil Pressure Sensor and Tire Pressure Sensor. Original demo products are unpublished; publish approved inventory with verified fitment data before launch.
 
 All tables have RLS enabled and no public/anon/authenticated table grants or policies. Server routes use the private Supabase secret key. Do not expose that key to the browser.
 

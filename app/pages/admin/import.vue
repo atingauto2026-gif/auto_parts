@@ -43,9 +43,9 @@ const preview = computed<PreviewRow[]>(() => {
     const factoryNo = row.factory_no || row.factoryno || ''
     const code = factoryNo.toUpperCase().replace(/^HD/, '')
     const match = [
-      ['SW', 'Coolant Temperature Sensor'], ['WK', 'Temperature Control Switch'],
+      ['SW', 'Coolant Temperature Sensor'], ['WK', 'Thermostatic Switch'],
       ['DCKG', 'Reverse Light Switch'], ['DCF', 'Solenoid Valve'],
-      ['JY', 'Oil Pressure Alarm'], ['TY', 'Tire Pressure Sensor'],
+      ['JY', 'Oil Pressure Sensor'], ['TY', 'Tire Pressure Sensor'],
     ].find(([prefix]) => code.startsWith(prefix))
     return { factoryNo, oem: row.oem || row.oe || '', carModel: row.car_model || row.carmodel || '', imageCount, category: match?.[1] ?? 'Unmapped' }
   })
@@ -94,7 +94,7 @@ async function runImport() {
 <template>
   <main class="import-page">
     <div class="import-shell">
-      <NuxtLink to="/" class="back-link">← RoadReady Auto</NuxtLink>
+      <NuxtLink to="/" class="back-link">← VAKTRA</NuxtLink>
       <div class="admin-top"><p class="eyebrow">CATALOG MANAGEMENT</p><button class="logout-button" @click="logout">退出登录</button></div>
       <h1>批量导入产品</h1>
       <p class="intro">上传产品 CSV，系统会按厂号识别六个产品分类，并根据 OE 数据表中的图片链接自动保存图片。导入前先检查预览。</p>

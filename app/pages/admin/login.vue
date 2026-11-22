@@ -29,7 +29,7 @@ async function signIn() {
 <template>
   <main class="login-page">
     <section class="login-card">
-      <NuxtLink to="/" class="back-link">← RoadReady Auto</NuxtLink>
+      <NuxtLink to="/" class="back-link">← VAKTRA</NuxtLink>
       <p class="eyebrow">CATALOG MANAGEMENT</p>
       <h1>管理员登录</h1>
       <p class="intro">输入管理员账号与密码进入产品目录管理后台。</p>

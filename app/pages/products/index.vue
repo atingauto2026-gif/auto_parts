@@ -60,10 +60,10 @@ const title = computed(() =>
 )
 
 useSeoMeta({
-  title: () => `${title.value} | RoadReady Auto`,
+  title: () => `${title.value} | VAKTRA`,
   description:
-    'Browse RoadReady automotive sensors, switches, solenoid valves and pressure monitoring components.',
-  ogTitle: () => `${title.value} | RoadReady Auto`,
+    'Browse VAKTRA automotive sensors, switches, solenoid valves and pressure monitoring components.',
+  ogTitle: () => `${title.value} | VAKTRA`,
   ogDescription:
     'Find parts and accessories for your next drive.',
   ogType: 'website',

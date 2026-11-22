@@ -4,7 +4,7 @@ const config = useRuntimeConfig()
 const whatsappHref = computed(
   () =>
     `https://wa.me/${config.public.whatsapp}?text=${encodeURIComponent(
-      'Hello RoadReady team — I would like to enquire about part availability and pricing.',
+      'Hello VAKTRA team — I would like to enquire about part availability and pricing.',
     )}`,
 )
 
@@ -13,8 +13,8 @@ const ogImage = `${config.public.siteUrl}/og/og-cover.jpg`
 useSeoMeta({
   title: 'Contact',
   description:
-    'Contact RoadReady Auto for wholesale pricing, stock availability, OE cross-references and samples. Every enquiry gets a personal reply.',
-  ogTitle: 'Contact RoadReady Auto',
+    'Contact VAKTRA for wholesale pricing, stock availability, OE cross-references and samples. Every enquiry gets a personal reply.',
+  ogTitle: 'Contact VAKTRA',
   ogDescription:
     'Wholesale enquiries, OE cross-references and sample requests — answered by our export team.',
   ogType: 'website',

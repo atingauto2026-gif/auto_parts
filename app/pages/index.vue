@@ -30,7 +30,7 @@ useSeoMeta({
   title: 'Automotive sensors & control components',
   description:
     'OE-referenced automotive sensors, switches, solenoid valves and pressure monitoring components for wholesale buyers. Request pricing, MOQ and fitment support.',
-  ogTitle: 'RoadReady Auto — automotive sensors & control components',
+  ogTitle: 'VAKTRA — automotive sensors & control components',
   ogDescription:
     'OE-referenced sensors, switches and control components for distributors, importers and workshop chains. Wholesale enquiries welcome.',
   ogType: 'website',
@@ -122,7 +122,7 @@ useHead({
       <div class="home-container">
         <div class="home-section__head">
           <div>
-            <p class="home-kicker home-kicker--dark"><span></span>RoadReady catalogue</p>
+            <p class="home-kicker home-kicker--dark"><span></span>VAKTRA catalogue</p>
             <h2>Featured components</h2>
           </div>
           <NuxtLink to="/products" class="home-text-link">Browse catalogue <AppIcon name="arrow-right" :size="15" /></NuxtLink>

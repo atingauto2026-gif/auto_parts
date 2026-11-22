@@ -83,12 +83,12 @@ const pageTitle = computed(() => `${landing.value.code} ${landing.value.name}`)
 useSeoMeta({
   title: () => pageTitle.value,
   description: () => metaDescription.value,
-  ogTitle: () => `${pageTitle.value} | RoadReady Auto`,
+  ogTitle: () => `${pageTitle.value} | VAKTRA`,
   ogDescription: () => metaDescription.value,
   ogType: 'website',
   ogImage: () => absoluteHero.value,
   twitterCard: 'summary_large_image',
-  twitterTitle: () => `${pageTitle.value} | RoadReady Auto`,
+  twitterTitle: () => `${pageTitle.value} | VAKTRA`,
   twitterDescription: () => metaDescription.value,
   twitterImage: () => absoluteHero.value,
 })
@@ -101,7 +101,7 @@ const productLd = computed(() => ({
   image: [absoluteHero.value],
   sku: landing.value.code,
   category: landing.value.categoryLabel,
-  brand: { '@type': 'Brand', name: 'RoadReady Auto' },
+  brand: { '@type': 'Brand', name: 'VAKTRA' },
 }))
 
 const breadcrumbLd = computed(() => ({

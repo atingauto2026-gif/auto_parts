@@ -17,10 +17,10 @@ const photos = {
 
 export const CATEGORY_META: CatalogCategory[] = [
   { id: 'coolant-temperature-sensor', label: 'Coolant Temperature Sensor', blurb: 'Accurate engine and coolant temperature monitoring components.', image: photos.workshop },
-  { id: 'temperature-control-switch', label: 'Temperature Control Switch', blurb: 'Reliable thermal switching and temperature regulation components.', image: photos.tools },
+  { id: 'temperature-control-switch', label: 'Thermostatic Switch', blurb: 'Reliable thermal switching and temperature regulation components.', image: photos.tools },
   { id: 'reverse-light-switch', label: 'Reverse Light Switch', blurb: 'Precision reverse signal switches for dependable lighting activation.', image: photos.car },
   { id: 'solenoid-valve', label: 'Solenoid Valve', blurb: 'Electromechanical valves engineered for consistent fluid and pressure control.', image: photos.wheel },
-  { id: 'oil-pressure-alarm', label: 'Oil Pressure Alarm', blurb: 'Oil pressure monitoring and warning components for engine protection.', image: photos.tools },
+  { id: 'oil-pressure-alarm', label: 'Oil Pressure Sensor', blurb: 'Oil pressure monitoring and warning components for engine protection.', image: photos.tools },
   { id: 'tire-pressure-sensor', label: 'Tire Pressure Sensor', blurb: 'TPMS components designed to support accurate tire pressure monitoring.', image: photos.wheel },
 ]
 
@@ -186,7 +186,7 @@ function toProduct(seed: Seed): ShopProduct {
     description: seed.tagline,
     descriptionHtml: `<p>${seed.tagline}</p>`,
     productType: seed.categoryLabel,
-    vendor: 'RoadReady Auto',
+    vendor: 'VAKTRA',
     tags,
     availableForSale: true,
     featuredImage: image,
